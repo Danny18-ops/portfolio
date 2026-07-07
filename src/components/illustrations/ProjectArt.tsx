@@ -1,285 +1,333 @@
 /**
- * Five original, hand-drawn SVG illustrations — one per project.
- * No stock assets, no icon packs. Animations are pure CSS keyframes
- * (defined in globals.css) and disabled under prefers-reduced-motion.
- * All colors come from theme CSS variables so they adapt to light/dark.
+ * Five original SVG diagrams, one per project. Each is drawn as a
+ * plain-English flow (input, process, output) with readable labels so
+ * a visitor understands the project at a glance. No stock assets.
+ * Animations are CSS keyframes from globals.css and are disabled
+ * under prefers-reduced-motion. Colors come from theme variables.
  */
 
+const sans = "var(--font-geist-sans), sans-serif";
 const mono = "var(--font-geist-mono), monospace";
 
-/* ── HackMatch: a query flowing into a vector space, matches lighting up ── */
+function ResultRow({
+  y,
+  title,
+  match,
+  top,
+}: {
+  y: number;
+  title: string;
+  match: string;
+  top?: boolean;
+}) {
+  return (
+    <g>
+      <rect
+        x="96"
+        y={y}
+        width="248"
+        height="38"
+        rx="8"
+        fill="var(--raised)"
+        stroke={top ? "var(--accent)" : "var(--line)"}
+        strokeWidth={top ? 1.4 : 1}
+      />
+      <text x="112" y={y + 24} fontFamily={sans} fontSize="12.5" fill="var(--fg)">
+        {title}
+      </text>
+      <text
+        x="330"
+        y={y + 24}
+        fontFamily={mono}
+        fontSize="11"
+        fill={top ? "var(--accent)" : "var(--muted)"}
+        textAnchor="end"
+      >
+        {match}
+      </text>
+    </g>
+  );
+}
+
+/* ── HackMatch: type a plain-English search, get ranked hackathons ── */
 export function HackMatchArt() {
-  const dots: Array<[number, number, number]> = [
-    [150, 120, 3], [180, 150, 2.5], [210, 118, 3], [246, 148, 2.5],
-    [172, 190, 3], [230, 190, 2.5], [136, 160, 2.5], [262, 116, 3],
-    [204, 165, 2.5], [148, 214, 2.5], [250, 214, 3], [284, 180, 2.5],
-  ];
-  const matches: Array<[number, number]> = [[210, 118], [204, 165], [250, 214]];
   return (
     <svg viewBox="0 0 400 260" className="h-full w-full" aria-hidden="true">
-      {/* query bar */}
-      <rect x="60" y="34" width="280" height="34" rx="8" fill="var(--raised)" stroke="var(--line)" />
-      <circle cx="82" cy="51" r="6" fill="none" stroke="var(--muted)" strokeWidth="1.6" />
-      <path d="M86.5 55.5 92 61" stroke="var(--muted)" strokeWidth="1.6" strokeLinecap="round" />
-      <text x="102" y="55" fontFamily={mono} fontSize="10.5" fill="var(--muted)">
-        find my next hackathon…
+      {/* search bar */}
+      <rect x="56" y="28" width="288" height="40" rx="20" fill="var(--raised)" stroke="var(--accent)" strokeWidth="1.2" />
+      <circle cx="80" cy="48" r="7" fill="none" stroke="var(--muted)" strokeWidth="1.7" />
+      <path d="M85 53.5 91 60" stroke="var(--muted)" strokeWidth="1.7" strokeLinecap="round" />
+      <text x="102" y="53" fontFamily={sans} fontSize="12.5" fill="var(--fg)">
+        beginner-friendly AI hackathons
       </text>
-      <rect className="anim-blink" x="248" y="43" width="5" height="15" fill="var(--accent)" />
-      {/* query flowing into embedding space */}
-      <path className="anim-dash" d="M200 68v28" stroke="var(--accent)" strokeWidth="1.5" fill="none" />
-      {/* vector space */}
-      {dots.map(([x, y, r]) => (
-        <circle key={`${x}-${y}`} cx={x} cy={y} r={r} fill="var(--muted)" opacity="0.45" />
-      ))}
-      {/* matched vectors */}
-      {matches.map(([x, y], i) => (
-        <g key={`${x}-${y}`}>
-          <circle className="anim-pulse" cx={x} cy={y} r="8" fill="var(--accent)" opacity="0.18" style={{ animationDelay: `${i * 0.4}s` }} />
-          <circle cx={x} cy={y} r="3.5" fill="var(--accent)" />
-        </g>
-      ))}
-      <path className="anim-dash-slow" d="M210 118 330 96" stroke="var(--accent)" strokeWidth="1.2" fill="none" opacity="0.7" />
-      <path className="anim-dash-slow" d="M204 165 330 135" stroke="var(--accent)" strokeWidth="1.2" fill="none" opacity="0.7" />
-      <path className="anim-dash-slow" d="M250 214 330 174" stroke="var(--accent)" strokeWidth="1.2" fill="none" opacity="0.7" />
-      {/* matched result cards */}
-      {[86, 125, 164].map((y, i) => (
-        <g key={y}>
-          <rect x="330" y={y - 12} width="58" height="30" rx="5" fill="var(--raised)" stroke={i === 0 ? "var(--accent)" : "var(--line)"} />
-          <rect x="337" y={y - 5} width="34" height="3.5" rx="1.75" fill="var(--fg)" opacity="0.7" />
-          <rect x="337" y={y + 3} width="24" height="3.5" rx="1.75" fill="var(--muted)" opacity="0.5" />
-        </g>
-      ))}
-      <text x="330" y="216" fontFamily={mono} fontSize="9" fill="var(--accent)">
-        98% match
+      <rect className="anim-blink" x="312" y="38" width="2.5" height="20" fill="var(--accent)" />
+
+      {/* flow down */}
+      <path className="anim-dash" d="M200 68v22" stroke="var(--accent)" strokeWidth="1.6" fill="none" />
+      <text x="212" y="86" fontFamily={mono} fontSize="10" fill="var(--muted)">
+        AI understands the meaning
       </text>
-      <text x="60" y="243" fontFamily={mono} fontSize="9" fill="var(--muted)" opacity="0.7">
-        semantic search · chromadb
-      </text>
+
+      {/* ranked results */}
+      <ResultRow y={100} title="GenAI Beginners Jam · online" match="96% match" top />
+      <ResultRow y={146} title="AI Weekend · San Diego" match="91% match" />
+      <ResultRow y={192} title="First-Timers Build Night" match="87% match" />
     </svg>
   );
 }
 
-/* ── Multi-Agent Research: agent pipeline with self-correcting QA loop ── */
+/* ── Multi-Agent Research: four agents pass work along, QA loops back ── */
 export function ResearchCrewArt() {
-  const agents: Array<{ x: number; label: string }> = [
-    { x: 70, label: "RES" },
-    { x: 160, label: "SUM" },
-    { x: 250, label: "WRT" },
-    { x: 340, label: "QA" },
+  const agents = [
+    { x: 24, label: "Research" },
+    { x: 118, label: "Summarize" },
+    { x: 212, label: "Write" },
+    { x: 306, label: "Review" },
   ];
   return (
     <svg viewBox="0 0 400 260" className="h-full w-full" aria-hidden="true">
-      {/* pipeline edges */}
-      <path className="anim-dash" d="M92 110h44" stroke="var(--accent)" strokeWidth="1.5" fill="none" />
-      <path className="anim-dash" d="M182 110h44" stroke="var(--accent)" strokeWidth="1.5" fill="none" style={{ animationDelay: "0.3s" }} />
-      <path className="anim-dash" d="M272 110h44" stroke="var(--accent)" strokeWidth="1.5" fill="none" style={{ animationDelay: "0.6s" }} />
-      {/* revision loop: QA back to Writer */}
+      {/* input */}
+      <text x="24" y="46" fontFamily={sans} fontSize="12.5" fill="var(--fg)">
+        Give it any topic…
+      </text>
+      <path className="anim-dash-slow" d="M59 56v30" stroke="var(--muted)" strokeWidth="1.3" fill="none" />
+
+      {/* agent pipeline */}
+      {agents.map((a, i) => (
+        <g key={a.label}>
+          <rect
+            x={a.x}
+            y="96"
+            width="70"
+            height="36"
+            rx="9"
+            fill="var(--raised)"
+            stroke={a.label === "Review" ? "var(--accent)" : "var(--line)"}
+            strokeWidth="1.3"
+          />
+          <text
+            x={a.x + 35}
+            y="118"
+            fontFamily={sans}
+            fontSize="11.5"
+            fill="var(--fg)"
+            textAnchor="middle"
+          >
+            {a.label}
+          </text>
+          {i < 3 && (
+            <path
+              className="anim-dash"
+              d={`M${a.x + 72} 114h20`}
+              stroke="var(--accent)"
+              strokeWidth="1.5"
+              fill="none"
+              style={{ animationDelay: `${i * 0.3}s` }}
+            />
+          )}
+        </g>
+      ))}
+
+      {/* revision loop: Review sends weak drafts back to Write */}
       <path
         className="anim-dash-slow"
-        d="M340 134c0 38-60 44-86 26"
+        d="M341 134c0 34-64 42-90 22"
         stroke="var(--muted)"
         strokeWidth="1.3"
         fill="none"
       />
-      <path d="m254 163-9-1 6-7z" fill="var(--muted)" />
-      <text x="300" y="188" fontFamily={mono} fontSize="9" fill="var(--muted)">
-        revise &lt; 70
+      <path d="m249 158-9-.5 5.5-7z" fill="var(--muted)" />
+      <text x="278" y="182" fontFamily={sans} fontSize="10.5" fill="var(--muted)" textAnchor="middle">
+        low score? rewrite it
       </text>
-      {/* agent nodes */}
-      {agents.map((a, i) => (
-        <g key={a.label}>
-          <circle className="anim-pulse" cx={a.x} cy="110" r="30" fill="var(--accent)" opacity="0.08" style={{ animationDelay: `${i * 0.5}s` }} />
-          <circle cx={a.x} cy="110" r="22" fill="var(--raised)" stroke={a.label === "QA" ? "var(--accent)" : "var(--line)"} strokeWidth="1.4" />
-          <text x={a.x} y="114" fontFamily={mono} fontSize="10" fill="var(--fg)" textAnchor="middle">
-            {a.label}
-          </text>
-        </g>
-      ))}
-      {/* topic in */}
-      <text x="70" y="52" fontFamily={mono} fontSize="9.5" fill="var(--muted)" textAnchor="middle">
-        topic in
-      </text>
-      <path className="anim-dash-slow" d="M70 60v24" stroke="var(--muted)" strokeWidth="1.2" fill="none" />
-      {/* report out */}
-      <rect x="322" y="210" width="36" height="42" rx="4" fill="var(--raised)" stroke="var(--line)" transform="translate(-282 -6)" />
-      <g transform="translate(-282 -6)">
-        <rect x="328" y="219" width="24" height="3" rx="1.5" fill="var(--accent)" />
-        <rect x="328" y="227" width="20" height="2.5" rx="1.25" fill="var(--muted)" opacity="0.6" />
-        <rect x="328" y="233" width="22" height="2.5" rx="1.25" fill="var(--muted)" opacity="0.6" />
-        <rect x="328" y="239" width="16" height="2.5" rx="1.25" fill="var(--muted)" opacity="0.6" />
-      </g>
-      <text x="94" y="232" fontFamily={mono} fontSize="9" fill="var(--muted)">
-        report.md
-      </text>
-      {/* score badge */}
-      <rect className="anim-pulse-fast" x="310" y="52" width="62" height="20" rx="10" fill="var(--accent-soft)" stroke="var(--accent)" strokeWidth="1" />
-      <text x="341" y="65" fontFamily={mono} fontSize="9.5" fill="var(--accent)" textAnchor="middle">
-        score 86
+
+      {/* output */}
+      <path className="anim-dash-slow" d="M59 214h56" stroke="var(--accent)" strokeWidth="1.4" fill="none" />
+      <path d="m118 214-8-4v8z" fill="var(--accent)" />
+      <rect x="24" y="196" width="28" height="36" rx="4" fill="var(--raised)" stroke="var(--line)" />
+      <rect x="29" y="204" width="18" height="2.5" rx="1.25" fill="var(--accent)" />
+      <rect x="29" y="210" width="14" height="2.5" rx="1.25" fill="var(--muted)" opacity="0.6" />
+      <rect x="29" y="216" width="16" height="2.5" rx="1.25" fill="var(--muted)" opacity="0.6" />
+      <text x="130" y="218" fontFamily={sans} fontSize="12" fill="var(--fg)">
+        …get a finished, quality-checked report
       </text>
     </svg>
   );
 }
 
-/* ── AI Patient Voice: phone call → live waveform → AI under test ── */
+/* ── AI Patient Voice: fake patient calls the AI, bugs get flagged ── */
 export function PatientVoiceArt() {
-  const bars = [12, 26, 18, 34, 22, 40, 16, 36, 24, 30, 14, 28, 20, 34];
+  const bars = [10, 22, 15, 30, 18, 34, 14, 30, 20, 26, 12, 24];
   return (
     <svg viewBox="0 0 400 260" className="h-full w-full" aria-hidden="true">
-      {/* phone (the synthetic patient) */}
-      <rect x="46" y="70" width="56" height="100" rx="10" fill="var(--raised)" stroke="var(--line)" strokeWidth="1.4" />
-      <rect x="64" y="80" width="20" height="4" rx="2" fill="var(--muted)" opacity="0.5" />
-      <circle cx="74" cy="152" r="6" fill="none" stroke="var(--muted)" strokeWidth="1.3" />
-      <text x="74" y="123" fontFamily={mono} fontSize="9" fill="var(--accent)" textAnchor="middle">
-        persona
+      {/* left: the synthetic patient */}
+      <rect x="36" y="66" width="60" height="104" rx="11" fill="var(--raised)" stroke="var(--line)" strokeWidth="1.4" />
+      <rect x="56" y="76" width="20" height="4" rx="2" fill="var(--muted)" opacity="0.5" />
+      <circle cx="66" cy="152" r="6" fill="none" stroke="var(--muted)" strokeWidth="1.3" />
+      <text x="66" y="112" fontFamily={sans} fontSize="10.5" fill="var(--fg)" textAnchor="middle">
+        AI plays a
       </text>
-      <text x="74" y="135" fontFamily={mono} fontSize="9" fill="var(--muted)" textAnchor="middle">
-        07/18
+      <text x="66" y="126" fontFamily={sans} fontSize="10.5" fill="var(--fg)" textAnchor="middle">
+        patient
       </text>
-      {/* live audio waveform bridge */}
+      <text x="66" y="186" fontFamily={mono} fontSize="9.5" fill="var(--muted)" textAnchor="middle">
+        persona 7 of 18
+      </text>
+
+      {/* live call waveform */}
+      <text x="200" y="84" fontFamily={sans} fontSize="10.5" fill="var(--muted)" textAnchor="middle">
+        real phone call
+      </text>
       {bars.map((h, i) => (
         <rect
           key={i}
           className="anim-eq"
-          x={126 + i * 11}
-          y={120 - h / 2}
-          width="5"
+          x={126 + i * 12.5}
+          y={118 - h / 2}
+          width="5.5"
           height={h}
-          rx="2.5"
+          rx="2.75"
           fill="var(--accent)"
           opacity="0.85"
-          style={{ animationDelay: `${(i % 7) * 0.13}s` }}
+          style={{ animationDelay: `${(i % 6) * 0.14}s` }}
         />
       ))}
-      {/* AI agent under test */}
-      <circle className="anim-ring" cx="316" cy="120" r="34" fill="none" stroke="var(--accent)" strokeWidth="1.2" strokeDasharray="10 8" opacity="0.6" />
-      <circle cx="316" cy="120" r="24" fill="var(--raised)" stroke="var(--line)" strokeWidth="1.4" />
-      <text x="316" y="118" fontFamily={mono} fontSize="9" fill="var(--fg)" textAnchor="middle">
-        agent
+
+      {/* right: the AI being tested */}
+      <circle cx="330" cy="118" r="28" fill="var(--raised)" stroke="var(--accent)" strokeWidth="1.3" />
+      <text x="330" y="114" fontFamily={sans} fontSize="10.5" fill="var(--fg)" textAnchor="middle">
+        clinic&apos;s AI
       </text>
-      <text x="316" y="130" fontFamily={mono} fontSize="9" fill="var(--muted)" textAnchor="middle">
-        under test
+      <text x="330" y="128" fontFamily={sans} fontSize="10.5" fill="var(--muted)" textAnchor="middle">
+        being tested
       </text>
-      {/* transcript being analyzed */}
-      <g>
-        <rect className="anim-type" x="92" y="196" width="150" height="5" rx="2.5" fill="var(--muted)" opacity="0.55" />
-        <rect className="anim-type" x="92" y="210" width="190" height="5" rx="2.5" fill="var(--muted)" opacity="0.4" style={{ animationDelay: "0.7s" }} />
-        <rect className="anim-type" x="92" y="224" width="120" height="5" rx="2.5" fill="var(--muted)" opacity="0.55" style={{ animationDelay: "1.4s" }} />
-      </g>
-      <rect className="anim-pulse-fast" x="292" y="200" width="66" height="20" rx="10" fill="var(--accent-soft)" stroke="var(--accent)" strokeWidth="1" />
-      <text x="325" y="213" fontFamily={mono} fontSize="9" fill="var(--accent)" textAnchor="middle">
-        bug found
+
+      {/* result: transcript reviewed, bug flagged */}
+      <path className="anim-dash-slow" d="M200 138v34" stroke="var(--muted)" strokeWidth="1.3" fill="none" />
+      <rect x="82" y="182" width="236" height="52" rx="9" fill="var(--raised)" stroke="var(--line)" />
+      <text x="98" y="203" fontFamily={sans} fontSize="11" fill="var(--muted)">
+        call recorded &amp; reviewed automatically
       </text>
-      <text x="46" y="46" fontFamily={mono} fontSize="9" fill="var(--muted)" opacity="0.7">
-        outbound call · realtime speech ↔ speech
+      <rect className="anim-pulse-fast" x="98" y="211" width="76" height="16" rx="8" fill="var(--accent-soft)" stroke="var(--accent)" strokeWidth="1" />
+      <text x="136" y="222.5" fontFamily={mono} fontSize="9.5" fill="var(--accent)" textAnchor="middle">
+        bug found ✓
       </text>
     </svg>
   );
 }
 
-/* ── Gen Contract: clauses drafting themselves onto the page ── */
+/* ── Gen Contract: plain-English request becomes a structured contract ── */
 export function GenContractArt() {
-  const lines: Array<[number, number, number]> = [
-    [150, 96, 0], [190, 110, 0.5], [170, 124, 1], [200, 138, 1.5],
-  ];
   return (
     <svg viewBox="0 0 400 260" className="h-full w-full" aria-hidden="true">
-      {/* the page */}
-      <rect x="112" y="30" width="176" height="204" rx="8" fill="var(--raised)" stroke="var(--line)" strokeWidth="1.4" />
-      <text x="132" y="62" fontFamily={mono} fontSize="11" fill="var(--fg)" letterSpacing="2">
+      {/* left: the plain-English ask */}
+      <rect x="28" y="58" width="132" height="66" rx="12" fill="var(--raised)" stroke="var(--line)" strokeWidth="1.3" />
+      <path d="M56 124l8 14 4-14z" fill="var(--raised)" stroke="var(--line)" strokeWidth="1.3" />
+      <text x="42" y="82" fontFamily={sans} fontSize="11" fill="var(--fg)">
+        “I need an NDA
+      </text>
+      <text x="42" y="98" fontFamily={sans} fontSize="11" fill="var(--fg)">
+        with a 2-year term”
+      </text>
+      <text x="42" y="160" fontFamily={sans} fontSize="10.5" fill="var(--muted)">
+        you type this…
+      </text>
+
+      {/* arrow */}
+      <path className="anim-dash" d="M166 108h44" stroke="var(--accent)" strokeWidth="1.6" fill="none" />
+      <path d="m214 108-9-4.5v9z" fill="var(--accent)" />
+
+      {/* right: the generated contract */}
+      <rect x="228" y="26" width="146" height="210" rx="9" fill="var(--raised)" stroke="var(--line)" strokeWidth="1.4" />
+      <text x="244" y="52" fontFamily={sans} fontSize="12" fill="var(--fg)" letterSpacing="1.5" fontWeight="600">
         AGREEMENT
       </text>
-      <path d="M132 72h136" stroke="var(--accent)" strokeWidth="1.6" />
-      {/* generated clause lines */}
-      {lines.map(([w, y, d]) => (
-        <rect
-          key={y}
-          className="anim-type"
-          x="132"
-          y={y}
-          width={w}
-          height="5"
-          rx="2.5"
-          fill="var(--muted)"
-          opacity="0.55"
-          style={{ animationDelay: `${d}s` }}
-        />
+      <path d="M244 60h114" stroke="var(--accent)" strokeWidth="1.5" />
+      {[
+        { y: 84, label: "1. Confidentiality" },
+        { y: 122, label: "2. Term (2 years)", hot: true },
+        { y: 160, label: "3. Liability" },
+        { y: 198, label: "4. Termination" },
+      ].map((c) => (
+        <g key={c.label}>
+          <rect
+            x="238"
+            y={c.y - 15}
+            width="126"
+            height="30"
+            rx="6"
+            fill={c.hot ? "var(--accent-soft)" : "none"}
+            stroke={c.hot ? "var(--accent)" : "var(--line)"}
+            strokeWidth="1"
+            className={c.hot ? "anim-pulse" : undefined}
+          />
+          <text
+            x="248"
+            y={c.y + 4}
+            fontFamily={sans}
+            fontSize="10.5"
+            fill={c.hot ? "var(--accent)" : "var(--muted)"}
+          >
+            {c.label}
+          </text>
+        </g>
       ))}
-      {/* highlighted clause block */}
-      <rect className="anim-pulse" x="126" y="154" width="148" height="44" rx="6" fill="var(--accent-soft)" stroke="var(--accent)" strokeWidth="1.1" />
-      <text x="136" y="172" fontFamily={mono} fontSize="10" fill="var(--accent)">
-        § 4.2 liability
-      </text>
-      <rect x="136" y="180" width="118" height="4" rx="2" fill="var(--muted)" opacity="0.5" />
-      <rect x="136" y="189" width="92" height="4" rx="2" fill="var(--muted)" opacity="0.5" />
-      {/* writing caret */}
-      <rect className="anim-blink" x="132" y="208" width="5" height="13" fill="var(--accent)" />
-      {/* generation sparkle */}
-      <g className="anim-pulse-fast">
-        <path d="M320 66l4 10 10 4-10 4-4 10-4-10-10-4 10-4z" fill="var(--accent)" />
-        <path d="M344 104l2.4 6 6 2.4-6 2.4-2.4 6-2.4-6-6-2.4 6-2.4z" fill="var(--accent)" opacity="0.6" />
-      </g>
-      <path className="anim-dash-slow" d="M318 96c-14 18-22 26-30 32" stroke="var(--accent)" strokeWidth="1.1" fill="none" opacity="0.6" />
-      <text x="60" y="243" fontFamily={mono} fontSize="9" fill="var(--muted)" opacity="0.7">
-        plain english in · contract out
+      <text x="228" y="254" fontFamily={sans} fontSize="10.5" fill="var(--muted)">
+        …and get this, clause by clause
       </text>
     </svg>
   );
 }
 
-/* ── LLM Fine-Tuning with RL: reward curve climbing past baseline ── */
+/* ── LLM Fine-Tuning: accuracy climbs 20% above the untrained model ── */
 export function FineTuneArt() {
   return (
     <svg viewBox="0 0 400 260" className="h-full w-full" aria-hidden="true">
       {/* axes */}
-      <path d="M64 36v176h288" stroke="var(--line)" strokeWidth="1.5" fill="none" />
-      <text x="52" y="40" fontFamily={mono} fontSize="9" fill="var(--muted)" textAnchor="end">
-        acc
+      <path d="M56 32v182h300" stroke="var(--line)" strokeWidth="1.5" fill="none" />
+      <text x="62" y="44" fontFamily={sans} fontSize="10.5" fill="var(--muted)">
+        accuracy on math problems
       </text>
-      <text x="352" y="228" fontFamily={mono} fontSize="9" fill="var(--muted)">
-        steps
+      <text x="356" y="230" fontFamily={sans} fontSize="10.5" fill="var(--muted)" textAnchor="end">
+        training time →
       </text>
       {/* gridlines */}
-      {[76, 116, 156].map((y) => (
-        <path key={y} d={`M64 ${y}h288`} stroke="var(--line)" strokeWidth="0.7" opacity="0.5" />
+      {[74, 116, 158].map((y) => (
+        <path key={y} d={`M56 ${y}h300`} stroke="var(--line)" strokeWidth="0.7" opacity="0.5" />
       ))}
-      {/* baseline (pre-GRPO) */}
+
+      {/* baseline: model before training */}
       <path
-        d="M64 172c48-4 96-2 144-6 48-2 96-4 144-6"
+        d="M56 176c50-3 100-2 150-5 50-2 100-3 150-5"
         stroke="var(--muted)"
-        strokeWidth="1.4"
+        strokeWidth="1.5"
         strokeDasharray="5 6"
         fill="none"
-        opacity="0.7"
+        opacity="0.8"
       />
-      <text x="300" y="150" fontFamily={mono} fontSize="9" fill="var(--muted)">
-        base llama-1b
+      <text x="230" y="196" fontFamily={sans} fontSize="10.5" fill="var(--muted)">
+        model before training
       </text>
-      {/* GRPO reward curve, drawing itself */}
+
+      {/* curve: model after RL training */}
       <path
         className="anim-draw"
-        d="M64 170c40-6 64-10 92-26s52-38 84-52c28-12 60-20 112-24"
+        d="M56 174c42-6 66-12 94-28s54-36 86-50c28-12 62-18 116-22"
         stroke="var(--accent)"
-        strokeWidth="2.2"
+        strokeWidth="2.4"
         fill="none"
         strokeLinecap="round"
       />
-      {/* checkpoints */}
-      <circle cx="156" cy="144" r="3.5" fill="var(--accent)" />
-      <circle cx="240" cy="92" r="3.5" fill="var(--accent)" />
-      <circle className="anim-pulse-fast" cx="352" cy="68" r="6" fill="var(--accent)" opacity="0.3" />
-      <circle cx="352" cy="68" r="3.5" fill="var(--accent)" />
+      <circle cx="352" cy="74" r="4" fill="var(--accent)" />
+      <circle className="anim-pulse-fast" cx="352" cy="74" r="8" fill="var(--accent)" opacity="0.25" />
+      <text x="196" y="106" fontFamily={sans} fontSize="10.5" fill="var(--fg)">
+        same model after RL training
+      </text>
+
       {/* +20% badge */}
-      <rect className="anim-pulse" x="296" y="40" width="52" height="20" rx="10" fill="var(--accent-soft)" stroke="var(--accent)" strokeWidth="1" />
-      <text x="322" y="53" fontFamily={mono} fontSize="10" fill="var(--accent)" textAnchor="middle">
-        +20%
-      </text>
-      {/* policy update loop */}
-      <circle className="anim-ring" cx="130" cy="70" r="20" fill="none" stroke="var(--accent)" strokeWidth="1.2" strokeDasharray="8 7" opacity="0.7" />
-      <text x="130" y="74" fontFamily={mono} fontSize="8.5" fill="var(--muted)" textAnchor="middle">
-        GRPO
-      </text>
-      <text x="106" y="110" fontFamily={mono} fontSize="8.5" fill="var(--muted)">
-        rule-based reward
+      <rect className="anim-pulse" x="296" y="36" width="72" height="22" rx="11" fill="var(--accent-soft)" stroke="var(--accent)" strokeWidth="1" />
+      <text x="332" y="51" fontFamily={sans} fontSize="11" fill="var(--accent)" textAnchor="middle" fontWeight="600">
+        +20% better
       </text>
     </svg>
   );

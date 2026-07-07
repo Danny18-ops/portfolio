@@ -19,10 +19,10 @@ export function Navbar() {
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 transition-[background-color,border-color,backdrop-filter] duration-300 ${
+      className={`fixed inset-x-0 top-0 z-50 transition-[background-color,box-shadow,backdrop-filter] duration-300 ${
         scrolled || open
-          ? "border-b border-line bg-bg/80 backdrop-blur-md"
-          : "border-b border-transparent"
+          ? "bg-bg/75 shadow-[0_12px_32px_-16px_rgba(0,0,0,0.5)] backdrop-blur-xl"
+          : ""
       }`}
     >
       <a
@@ -33,7 +33,7 @@ export function Navbar() {
       </a>
       <nav
         aria-label="Primary"
-        className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between px-5 sm:px-8"
+        className="mx-auto flex h-[4.5rem] w-full max-w-6xl items-center justify-between px-5 sm:px-8"
       >
         <a
           href="#top"
@@ -41,25 +41,26 @@ export function Navbar() {
           aria-label="Back to top"
         >
           <Logo className="h-8 w-8" />
-          <span className="font-mono text-sm tracking-tight text-muted">
-            dnyaneshwari<span className="text-accent">.</span>raut
+          <span className="font-display text-[17px] font-medium tracking-tight">
+            Dnyaneshwari Raut
           </span>
         </a>
 
-        <div className="hidden items-center gap-1 md:flex">
-          {navLinks.map((link, i) => (
+        <div className="hidden items-center gap-1.5 md:flex">
+          {navLinks.map((link) => (
             <a
               key={link.href}
               href={link.href}
-              className="group rounded-md px-3 py-2 font-mono text-[13px] text-muted transition-colors hover:text-fg"
+              className="group relative rounded-lg px-4 py-2 text-[15px] font-medium tracking-tight text-muted transition-colors duration-200 hover:bg-fg/[0.05] hover:text-fg"
             >
-              <span className="text-accent">0{i + 1}.</span>{" "}
-              <span className="group-hover:underline group-hover:decoration-accent group-hover:underline-offset-4">
-                {link.label}
-              </span>
+              {link.label}
+              <span
+                className="absolute inset-x-4 -bottom-px h-px scale-x-0 bg-gradient-to-r from-transparent via-accent to-transparent transition-transform duration-300 group-hover:scale-x-100"
+                aria-hidden="true"
+              />
             </a>
           ))}
-          <div className="ml-2">
+          <div className="ml-3">
             <ThemeToggle />
           </div>
         </div>
@@ -71,7 +72,7 @@ export function Navbar() {
             aria-label={open ? "Close menu" : "Open menu"}
             aria-expanded={open}
             onClick={() => setOpen((v) => !v)}
-            className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-line text-muted transition-colors hover:border-accent/50 hover:text-accent"
+            className="inline-flex h-9 w-9 items-center justify-center rounded-lg text-muted transition-colors hover:bg-fg/[0.05] hover:text-accent"
           >
             <svg
               viewBox="0 0 24 24"
@@ -99,17 +100,17 @@ export function Navbar() {
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.25, ease: "easeOut" }}
-            className="overflow-hidden border-t border-line bg-bg/95 backdrop-blur-md md:hidden"
+            className="overflow-hidden bg-bg/95 backdrop-blur-xl md:hidden"
           >
             <div className="flex flex-col px-5 py-4">
-              {navLinks.map((link, i) => (
+              {navLinks.map((link) => (
                 <a
                   key={link.href}
                   href={link.href}
                   onClick={() => setOpen(false)}
-                  className="rounded-md px-2 py-3 font-mono text-sm text-muted transition-colors hover:text-fg"
+                  className="rounded-lg px-3 py-3 text-base font-medium text-muted transition-colors hover:bg-fg/[0.05] hover:text-fg"
                 >
-                  <span className="text-accent">0{i + 1}.</span> {link.label}
+                  {link.label}
                 </a>
               ))}
             </div>

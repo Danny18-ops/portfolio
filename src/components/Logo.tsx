@@ -1,7 +1,7 @@
 /**
- * Original "DR" graph monogram — the D drawn as a node-edge hexagon,
- * the R implied by the accent leg kicking out of the bowl.
- * Hand-drawn SVG, not from any icon pack.
+ * Original "DR" ligature monogram — D and R fused on one shared stem.
+ * The rounded bowl reads as the D; the diagonal leg kicking out of the
+ * bowl's base (in accent) completes the R. Hand-drawn SVG, no icon pack.
  */
 export function Logo({ className }: { className?: string }) {
   return (
@@ -11,18 +11,14 @@ export function Logo({ className }: { className?: string }) {
       role="img"
       aria-label="Dnyaneshwari Raut logo"
     >
-      <g stroke="currentColor" strokeWidth="2" strokeLinecap="round" fill="none">
-        <path d="M11 7v18" />
-        <path d="M11 7 22 12" />
-        <path d="M22 12v6" />
-        <path d="M11 25 22 18" />
-        <path d="M22 18 27 25.5" stroke="var(--accent)" />
+      <g fill="none" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M9.5 5.5v21" stroke="currentColor" />
+        <path
+          d="M9.5 5.5H14c7 0 10 3.5 10 8s-3 8-10 8H9.5"
+          stroke="currentColor"
+        />
+        <path d="m16 21.5 8.5 6" stroke="var(--accent)" />
       </g>
-      <circle cx="11" cy="7" r="2.25" fill="currentColor" />
-      <circle cx="11" cy="25" r="2.25" fill="currentColor" />
-      <circle cx="22" cy="12" r="2.25" fill="var(--accent)" />
-      <circle cx="22" cy="18" r="2.25" fill="currentColor" />
-      <circle cx="27" cy="25.5" r="2.25" fill="var(--accent)" />
     </svg>
   );
 }

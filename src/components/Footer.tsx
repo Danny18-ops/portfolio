@@ -7,12 +7,12 @@ export function Footer() {
       <div className="mx-auto flex w-full max-w-6xl flex-col items-center gap-4 px-5 py-10 sm:flex-row sm:justify-between sm:px-8">
         <div className="flex items-center gap-3">
           <Logo className="h-6 w-6 text-muted" />
-          <p className="font-mono text-xs text-muted">
-            © {new Date().getFullYear()} Dnyaneshwari Raut — designed &amp; built
+          <p className="text-[13px] text-muted">
+            © {new Date().getFullYear()} Dnyaneshwari Raut. Designed &amp; built
             from scratch, no templates.
           </p>
         </div>
-        <div className="flex items-center gap-5 font-mono text-xs">
+        <div className="flex items-center gap-5 text-[13px]">
           <a
             href={site.github}
             target="_blank"
@@ -30,7 +30,7 @@ export function Footer() {
             linkedin
           </a>
           <a
-            href={`mailto:${site.email}`}
+            href={site.mailto}
             className="text-muted transition-colors hover:text-accent"
           >
             email

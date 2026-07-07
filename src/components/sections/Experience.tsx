@@ -1,3 +1,4 @@
+import { Aurora } from "@/components/ui/Aurora";
 import { Chip } from "@/components/ui/Chip";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
@@ -6,10 +7,24 @@ const roles = [
   {
     company: "LPL Financial",
     role: "AI Engineer",
-    meta: "San Diego, CA · Aug 2025 – Jun 2026",
-    paragraphs: [
-      "At LPL Financial I built an agentic copilot for financial advisors — a LangGraph system wired into Azure OpenAI, Azure AI Search, and MCP connectors, with human-in-the-loop checkpoints wherever the stakes demanded a person in the chain. It compressed advisor meeting prep from 45 minutes to under 15, and the RAG framework underneath it held 92% answer accuracy against our evaluation sets.",
-      "Shipping it mattered as much as building it. Every agent run was traced in LangSmith, answer quality was scored continuously by LLM-as-judge evaluators, and prompt or retrieval changes had to pass CI/CD regression suites before they went anywhere near an advisor. The whole system ran containerized on AKS, built with Docker and delivered through Azure DevOps.",
+    location: "San Diego, CA",
+    period: "Aug 2025 – Jun 2026",
+    achievements: [
+      {
+        headline: "Meeting prep: 45 min → under 15",
+        detail:
+          "Built an agentic copilot for financial advisors: LangGraph wired into Azure OpenAI, Azure AI Search, and MCP connectors, with human-in-the-loop checkpoints wherever the stakes demanded one.",
+      },
+      {
+        headline: "92% answer accuracy, continuously proven",
+        detail:
+          "The RAG framework underneath held 92% accuracy against evaluation sets, with every agent run traced in LangSmith and scored by LLM-as-judge evaluators.",
+      },
+      {
+        headline: "No change ships without passing review",
+        detail:
+          "Prompt and retrieval changes had to clear CI/CD regression suites before reaching an advisor. The system ran containerized on AKS and shipped through Azure DevOps.",
+      },
     ],
     stack: [
       "LangGraph",
@@ -24,11 +39,25 @@ const roles = [
   },
   {
     company: "Cognizant Technology Solutions",
-    role: "Machine Learning Engineer",
-    meta: "Mumbai, India · Aug 2022 – Jun 2024",
-    paragraphs: [
-      "At Cognizant I owned the full ML lifecycle for insurance clients. I built fraud-detection and claims risk-scoring models on XGBoost and LightGBM that reached 76% recall on fraudulent cases, and fine-tuned BERT classifiers with Hugging Face to automatically triage claim notes — cutting analyst review time roughly in half.",
-      "The engineering behind those models was mine too: PySpark ETL pipelines on AWS feeding the training data, FastAPI inference services deployed through SageMaker and Kubernetes that kept latency under 300 milliseconds, and MLflow tying the whole practice together with experiment tracking and a proper model registry.",
+    role: "Software Engineer, ML",
+    location: "Mumbai, India",
+    period: "Aug 2022 – Jun 2024",
+    achievements: [
+      {
+        headline: "76% recall on fraudulent claims",
+        detail:
+          "Owned the full ML lifecycle for insurance clients, building fraud-detection and claims risk-scoring models on XGBoost and LightGBM with real money riding on the decisions.",
+      },
+      {
+        headline: "Analyst review time cut roughly in half",
+        detail:
+          "Fine-tuned BERT classifiers with Hugging Face to automatically triage claim notes before a human ever saw them.",
+      },
+      {
+        headline: "Sub-300ms inference, end to end",
+        detail:
+          "PySpark ETL on AWS fed the training data; FastAPI services on SageMaker and Kubernetes served it back, with MLflow tracking every experiment and model.",
+      },
     ],
     stack: [
       "XGBoost",
@@ -50,9 +79,11 @@ export function Experience() {
     <section
       id="experience"
       aria-labelledby="experience-heading"
-      className="border-y border-line bg-surface/40"
+      className="relative overflow-hidden border-y border-line bg-surface/40"
     >
-      <div className="mx-auto w-full max-w-6xl px-5 py-24 sm:px-8 sm:py-32">
+      <Aurora className="anim-aurora -left-[22%] top-[35%] h-[70vmin] w-[70vmin] opacity-50" />
+
+      <div className="relative mx-auto w-full max-w-6xl px-5 py-24 sm:px-8 sm:py-32">
         <Reveal>
           <SectionHeading
             index="02"
@@ -62,34 +93,41 @@ export function Experience() {
           />
         </Reveal>
 
-        <div className="mt-14 space-y-16">
+        <div className="mt-16 space-y-16">
           {roles.map((r, i) => (
             <Reveal key={r.company} delay={0.08 * i}>
-              <article className="relative grid gap-6 md:grid-cols-[220px_1fr] md:gap-10">
-                <div className="md:pt-1">
-                  <p className="font-mono text-xs leading-relaxed tracking-wide text-muted">
-                    {r.meta}
+              <article className="border-t border-line pt-10">
+                <div className="flex flex-wrap items-baseline justify-between gap-x-8 gap-y-2">
+                  <h3 className="font-display text-2xl font-semibold tracking-tight text-fg sm:text-3xl">
+                    {r.role} <span className="text-accent">·</span>{" "}
+                    <span className="italic">{r.company}</span>
+                  </h3>
+                  <p className="text-sm text-muted">
+                    {r.location} · {r.period}
                   </p>
                 </div>
-                <div className="relative border-l border-line pl-6 md:pl-8">
-                  <span
-                    className="absolute -left-[5px] top-2 h-[9px] w-[9px] rounded-full bg-accent shadow-[0_0_12px_var(--glow)]"
-                    aria-hidden="true"
-                  />
-                  <h3 className="font-display text-xl font-semibold text-fg sm:text-2xl">
-                    {r.role}{" "}
-                    <span className="text-accent">@ {r.company}</span>
-                  </h3>
-                  <div className="mt-4 space-y-4 text-base leading-relaxed text-muted">
-                    {r.paragraphs.map((p) => (
-                      <p key={p.slice(0, 32)}>{p}</p>
-                    ))}
-                  </div>
-                  <div className="mt-6 flex flex-wrap gap-2">
-                    {r.stack.map((s) => (
-                      <Chip key={s}>{s}</Chip>
-                    ))}
-                  </div>
+
+                <ul className="mt-10 grid gap-8 md:grid-cols-3">
+                  {r.achievements.map((a) => (
+                    <li key={a.headline}>
+                      <span
+                        className="mb-4 block h-px w-10 bg-gold"
+                        aria-hidden="true"
+                      />
+                      <p className="text-[17px] font-semibold leading-snug text-fg">
+                        {a.headline}
+                      </p>
+                      <p className="mt-2.5 text-[15px] leading-relaxed text-muted">
+                        {a.detail}
+                      </p>
+                    </li>
+                  ))}
+                </ul>
+
+                <div className="mt-9 flex flex-wrap gap-2">
+                  {r.stack.map((s) => (
+                    <Chip key={s}>{s}</Chip>
+                  ))}
                 </div>
               </article>
             </Reveal>

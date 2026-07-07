@@ -1,45 +1,51 @@
 "use client";
 
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { useEffect, useState } from "react";
-import { NeuralCanvas } from "@/components/NeuralCanvas";
-import { site } from "@/lib/site";
+import { motion, useReducedMotion } from "framer-motion";
+import { RotatingText } from "@/components/ui/RotatingText";
 
 const TITLES = ["AI Engineer", "ML Engineer", "AI Software Engineer"];
 
 const ease = [0.21, 0.47, 0.32, 0.98] as const;
 
-function RotatingTitle() {
-  const reduceMotion = useReducedMotion();
-  const [index, setIndex] = useState(0);
-
-  useEffect(() => {
-    if (reduceMotion) return;
-    const timer = setInterval(() => setIndex((i) => (i + 1) % TITLES.length), 2800);
-    return () => clearInterval(timer);
-  }, [reduceMotion]);
-
+/**
+ * Signature backdrop: two drifting ember-glow auroras, a film-grain
+ * wash, and slow hairline orbits — original, no particle-network cliché.
+ */
+function Backdrop() {
   return (
-    <span className="inline-flex items-baseline gap-3 font-mono">
-      <span className="text-accent" aria-hidden="true">
-        ▸
-      </span>
-      <span className="relative inline-block h-[1.4em] overflow-hidden align-bottom">
-        <AnimatePresence mode="wait" initial={false}>
-          <motion.span
-            key={TITLES[index]}
-            initial={reduceMotion ? false : { y: "115%" }}
-            animate={{ y: 0 }}
-            exit={reduceMotion ? undefined : { y: "-115%" }}
-            transition={{ duration: 0.45, ease }}
-            className="block whitespace-nowrap"
-          >
-            {TITLES[index]}
-          </motion.span>
-        </AnimatePresence>
-      </span>
-      <span className="anim-blink -ml-1 inline-block h-[1.05em] w-[0.55ch] translate-y-[0.15em] bg-accent" aria-hidden="true" />
-    </span>
+    <div className="absolute inset-0 overflow-hidden" aria-hidden="true">
+      {/* ember auroras */}
+      <div className="anim-aurora absolute -top-[30%] left-[8%] h-[75vmin] w-[75vmin] rounded-full bg-[radial-gradient(closest-side,var(--glow),transparent_72%)] opacity-70 blur-3xl" />
+      <div className="anim-aurora-alt absolute -bottom-[25%] right-[-12%] h-[80vmin] w-[80vmin] rounded-full bg-[radial-gradient(closest-side,var(--gold-soft),transparent_70%)] blur-3xl" />
+
+      {/* hairline orbits, anchored off the right edge */}
+      <svg
+        viewBox="0 0 800 800"
+        className="absolute -right-[22vmin] top-1/2 h-[110vmin] w-[110vmin] -translate-y-1/2"
+        fill="none"
+      >
+        <g className="anim-orbit">
+          <circle cx="400" cy="400" r="330" stroke="var(--line)" strokeWidth="1" />
+          <circle cx="400" cy="70" r="4" fill="var(--gold)" />
+        </g>
+        <g className="anim-orbit-reverse">
+          <circle
+            cx="400"
+            cy="400"
+            r="238"
+            stroke="var(--line)"
+            strokeWidth="1"
+            strokeDasharray="1 7"
+          />
+          <circle cx="638" cy="400" r="3" fill="var(--accent)" />
+        </g>
+        <circle cx="400" cy="400" r="146" stroke="var(--line)" strokeWidth="1" />
+      </svg>
+
+      {/* film grain + fade into the page */}
+      <div className="texture-grain absolute inset-0 opacity-[0.05] dark:opacity-[0.07]" />
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-bg" />
+    </div>
   );
 }
 
@@ -49,7 +55,7 @@ export function Hero() {
   const fadeUp = (delay: number) => ({
     initial: reduceMotion ? undefined : { opacity: 0, y: 28 },
     animate: { opacity: 1, y: 0 },
-    transition: { duration: 0.7, delay, ease },
+    transition: { duration: 0.8, delay, ease },
   });
 
   return (
@@ -58,68 +64,53 @@ export function Hero() {
       aria-label="Introduction"
       className="relative flex min-h-[100svh] items-center overflow-hidden"
     >
-      <NeuralCanvas className="absolute inset-0 h-full w-full" />
-      <div
-        className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-bg"
-        aria-hidden="true"
-      />
+      <Backdrop />
 
       <div className="relative mx-auto w-full max-w-6xl px-5 pb-24 pt-32 sm:px-8">
         <motion.p
           {...fadeUp(0.05)}
-          className="font-mono text-sm tracking-[0.2em] text-accent"
+          className="text-sm font-medium uppercase tracking-[0.4em] text-gold"
         >
-          hello world — I&apos;m
+          Hello, I&apos;m
         </motion.p>
 
         <motion.h1
           {...fadeUp(0.15)}
-          className="mt-5 font-display text-5xl font-bold tracking-tight text-fg sm:text-7xl"
+          className="mt-6 font-display text-[3.2rem] font-semibold leading-[1.04] tracking-tight text-fg sm:text-7xl lg:text-[5.5rem]"
         >
-          Dnyaneshwari Raut
+          Dnyaneshwari
+          <br />
+          Raut<span className="text-accent">.</span>
         </motion.h1>
 
-        <motion.p
-          {...fadeUp(0.28)}
-          className="mt-5 text-2xl font-medium text-muted sm:text-4xl"
-        >
-          <RotatingTitle />
+        <motion.p {...fadeUp(0.3)} className="mt-6 text-3xl text-muted sm:text-4xl">
+          <RotatingText items={TITLES} className="font-display italic text-fg" />
         </motion.p>
 
         <motion.p
-          {...fadeUp(0.4)}
-          className="mt-8 max-w-xl text-base leading-relaxed text-muted sm:text-lg"
+          {...fadeUp(0.42)}
+          className="mt-8 max-w-xl text-lg leading-relaxed text-muted"
         >
-          I build AI that survives contact with production — agentic copilots,
+          I build AI that survives contact with production: agentic copilots,
           RAG systems that stay accurate, and the LLMOps discipline that keeps
-          them honest. Most recently: an advisor copilot at LPL Financial that
-          cut meeting prep from 45 minutes to under 15.
+          them honest.
         </motion.p>
 
-        <motion.div {...fadeUp(0.52)} className="mt-10 flex flex-wrap items-center gap-4">
+        <motion.div
+          {...fadeUp(0.55)}
+          className="mt-11 flex flex-wrap items-center gap-4"
+        >
           <a
             href="#projects"
-            className="rounded-md bg-accent px-6 py-3 text-sm font-semibold text-bg shadow-[0_0_24px_var(--glow)] transition-transform hover:-translate-y-0.5"
+            className="rounded-full bg-accent px-8 py-3.5 text-[15px] font-semibold text-bg shadow-[0_0_32px_var(--glow)] transition-[transform,filter] hover:-translate-y-0.5 hover:brightness-110"
           >
-            View Work
-          </a>
-          {/* TODO: resume — drop the final PDF at public/assets/resume/resume.pdf; this
-              button already points there, no code change needed. */}
-          <a
-            href={site.resume}
-            download="Dnyaneshwari-Raut-Resume.pdf"
-            className="rounded-md border border-accent/60 px-6 py-3 text-sm font-semibold text-accent transition-colors hover:bg-accent-soft"
-          >
-            Download Resume
+            View my work
           </a>
           <a
             href="#contact"
-            className="group px-2 py-3 font-mono text-sm text-muted transition-colors hover:text-fg"
+            className="rounded-full border border-fg/20 px-8 py-3.5 text-[15px] font-semibold text-fg transition-colors hover:border-gold/60 hover:text-gold"
           >
-            contact{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1">
-              →
-            </span>
+            Get in touch
           </a>
         </motion.div>
       </div>
@@ -129,11 +120,14 @@ export function Hero() {
         aria-label="Scroll to about section"
         initial={reduceMotion ? undefined : { opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1.2, duration: 0.8 }}
-        className="absolute bottom-7 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 font-mono text-[11px] tracking-[0.3em] text-muted transition-colors hover:text-accent sm:flex"
+        transition={{ delay: 1.4, duration: 0.8 }}
+        className="absolute bottom-7 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-3 text-[11px] font-medium uppercase tracking-[0.35em] text-muted transition-colors hover:text-gold sm:flex"
       >
         scroll
-        <span className="anim-float block h-8 w-px bg-gradient-to-b from-accent to-transparent" aria-hidden="true" />
+        <span
+          className="anim-float block h-9 w-px bg-gradient-to-b from-gold to-transparent"
+          aria-hidden="true"
+        />
       </motion.a>
     </section>
   );

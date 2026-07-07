@@ -2,32 +2,37 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* ── Neural Grid design tokens ─────────────────────────────
-   Dark-first: :root holds the dark palette, .light overrides. */
+/* ── "Void & Arcade Crimson" design tokens ─────────────────
+   Editorial-luxe theme. Dark-first: :root holds the void-black
+   palette, .light overrides with a parchment variant. */
 :root {
-  --bg: #0a0e14;
-  --surface: #0e141f;
-  --raised: #121a28;
-  --line: rgba(148, 163, 184, 0.14);
-  --fg: #e6edf6;
-  --muted: #94a3b8;
-  --accent: #22d3ee;
-  --accent-strong: #67e8f9;
-  --accent-soft: rgba(34, 211, 238, 0.12);
-  --glow: rgba(34, 211, 238, 0.35);
+  --bg: #0d0c0a;
+  --surface: #151310;
+  --raised: #1c1915;
+  --line: rgba(245, 242, 236, 0.1);
+  --fg: #f5f2ec;
+  --muted: #a9a297;
+  --accent: #e8b04b;
+  --accent-strong: #f3c76e;
+  --accent-soft: rgba(232, 176, 75, 0.12);
+  --glow: rgba(232, 176, 75, 0.28);
+  --gold: #c9924f;
+  --gold-soft: rgba(201, 146, 79, 0.13);
 }
 
 .light {
-  --bg: #f8fafc;
-  --surface: #ffffff;
-  --raised: #eef2f7;
-  --line: rgba(15, 23, 42, 0.12);
-  --fg: #0b1220;
-  --muted: #475569;
-  --accent: #0e7490;
-  --accent-strong: #155e75;
-  --accent-soft: rgba(14, 116, 144, 0.1);
-  --glow: rgba(14, 116, 144, 0.25);
+  --bg: #f7f3ea;
+  --surface: #fffdf7;
+  --raised: #ede6d6;
+  --line: rgba(44, 36, 22, 0.14);
+  --fg: #201a12;
+  --muted: #6f665a;
+  --accent: #9a6b1f;
+  --accent-strong: #7c5414;
+  --accent-soft: rgba(154, 107, 31, 0.1);
+  --glow: rgba(154, 107, 31, 0.18);
+  --gold: #8a6a33;
+  --gold-soft: rgba(138, 106, 51, 0.14);
 }
 
 @theme inline {
@@ -40,8 +45,10 @@
   --color-accent: var(--accent);
   --color-accent-strong: var(--accent-strong);
   --color-accent-soft: var(--accent-soft);
+  --color-gold: var(--gold);
+  --color-gold-soft: var(--gold-soft);
   --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
-  --font-display: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-fraunces), ui-serif, Georgia, serif;
   --font-mono: var(--font-geist-mono), ui-monospace, "SF Mono", monospace;
 }
 
@@ -67,6 +74,60 @@ body {
 
 section[id] {
   scroll-margin-top: 4.5rem;
+}
+
+/* ── Signature backdrop: ember aurora + film grain + orbits ── */
+
+@keyframes aurora-drift {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(4%, -4%) scale(1.1);
+  }
+}
+
+@keyframes aurora-drift-alt {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1.05);
+  }
+  50% {
+    transform: translate(-4%, 3%) scale(1);
+  }
+}
+
+@keyframes orbit-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.anim-aurora {
+  animation: aurora-drift 18s ease-in-out infinite;
+}
+
+.anim-aurora-alt {
+  animation: aurora-drift-alt 22s ease-in-out infinite;
+}
+
+.anim-orbit {
+  transform-origin: center;
+  transform-box: fill-box;
+  animation: orbit-spin 90s linear infinite;
+}
+
+.anim-orbit-reverse {
+  transform-origin: center;
+  transform-box: fill-box;
+  animation: orbit-spin 140s linear infinite reverse;
+}
+
+/* film-grain texture, tiled inline SVG noise */
+.texture-grain {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 160px 160px;
 }
 
 /* ── Animation library for the custom SVG illustrations ──── */
@@ -206,7 +267,11 @@ section[id] {
   .anim-draw,
   .anim-type,
   .anim-float,
-  .anim-ring {
+  .anim-ring,
+  .anim-aurora,
+  .anim-aurora-alt,
+  .anim-orbit,
+  .anim-orbit-reverse {
     animation: none !important;
   }
 }

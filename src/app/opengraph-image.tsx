@@ -1,13 +1,14 @@
 import { ImageResponse } from "next/og";
 
-export const alt = "Dnyaneshwari Raut — AI Engineer · ML Engineer · AI Software Engineer";
+export const alt = "Dnyaneshwari Raut · AI Engineer · ML Engineer · AI Software Engineer";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-const ink = "#0a0e14";
-const fg = "#e6edf6";
-const muted = "#94a3b8";
-const cyan = "#22d3ee";
+const ink = "#0d0c0a";
+const fg = "#f5f2ec";
+const muted = "#a9a297";
+const accent = "#e8b04b";
+const gold = "#e8b04b";
 
 function Node({ x, y, r, glow }: { x: number; y: number; r: number; glow?: boolean }) {
   return (
@@ -19,8 +20,8 @@ function Node({ x, y, r, glow }: { x: number; y: number; r: number; glow?: boole
         width: r * 2,
         height: r * 2,
         borderRadius: 9999,
-        background: glow ? cyan : "rgba(230, 237, 246, 0.35)",
-        boxShadow: glow ? `0 0 24px 6px rgba(34, 211, 238, 0.45)` : "none",
+        background: glow ? gold : "rgba(245, 242, 236, 0.35)",
+        boxShadow: glow ? `0 0 24px 6px rgba(232, 176, 75, 0.45)` : "none",
         display: "flex",
       }}
     />
@@ -51,7 +52,7 @@ export default function OpenGraphImage() {
             width: 560,
             height: 560,
             borderRadius: 9999,
-            background: "rgba(34, 211, 238, 0.10)",
+            background: "rgba(232, 176, 75, 0.10)",
             filter: "blur(80px)",
             display: "flex",
           }}
@@ -68,7 +69,7 @@ export default function OpenGraphImage() {
             display: "flex",
             alignItems: "center",
             gap: 16,
-            color: cyan,
+            color: accent,
             fontSize: 26,
             letterSpacing: 8,
             marginBottom: 28,
@@ -80,7 +81,7 @@ export default function OpenGraphImage() {
               height: 0,
               borderTop: "10px solid transparent",
               borderBottom: "10px solid transparent",
-              borderLeft: `16px solid ${cyan}`,
+              borderLeft: `16px solid ${accent}`,
               display: "flex",
             }}
           />
@@ -113,7 +114,7 @@ export default function OpenGraphImage() {
             display: "flex",
             marginTop: 64,
             fontSize: 24,
-            color: cyan,
+            color: accent,
             letterSpacing: 2,
           }}
         >
