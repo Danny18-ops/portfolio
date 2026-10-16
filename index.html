@@ -90,7 +90,13 @@
     font: inherit; font-size: 15px; cursor: pointer; line-height: 1;
   }
   .controls button:hover { background: rgba(0,0,0,.12); }
-  .body { padding: 24px 28px; overflow: auto; }
+  .body { padding: 24px 28px; overflow: auto; flex: 1; min-height: 0; }
+  .resize-handle {
+    position: absolute; right: 0; bottom: 0; width: 18px; height: 18px;
+    cursor: nwse-resize; touch-action: none;
+    background: linear-gradient(135deg, transparent 0 50%, var(--ink) 50% 58%, transparent 58% 66%, var(--ink) 66% 74%, transparent 74%);
+  }
+  @media (max-width: 900px) { .resize-handle { display: none; } }
 
   #about { left: 168px; top: 76px; width: 600px; }
   #about .body { display: flex; gap: 22px; align-items: flex-start; }
@@ -100,6 +106,15 @@
   .prompt { font-size: 13px; line-height: 1.7; }
   .cursor { display: inline-block; width: 9px; height: 16px; background: var(--ink); vertical-align: -3px; animation: blink 1s steps(1) infinite; }
   @keyframes blink { 50% { opacity: 0; } }
+
+  #experience { left: 220px; top: 150px; width: 560px; max-height: calc(100vh - 160px); }
+  #experience .body { padding: 20px 24px; display: flex; flex-direction: column; gap: 18px; }
+  .job { border-left: 3px solid var(--ink); padding-left: 14px; }
+  .job .when { display: inline-block; background: var(--accent); border: 1.5px solid var(--ink); padding: 0 6px; font-size: 11px; font-weight: 600; }
+  .job h3 { margin: 8px 0 0; font-family: var(--display); font-size: 19px; font-weight: 700; }
+  .job .where { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .job ul { margin: 10px 0 0; padding-left: 18px; font-size: 13px; line-height: 1.6; }
+  .job li { margin-bottom: 4px; }
 
   #skills { left: 360px; top: 120px; width: 660px; max-height: calc(100vh - 160px); }
   #skills .body { padding: 20px 22px; font-size: 13px; line-height: 1.6; display: flex; flex-direction: column; gap: 16px; }
@@ -112,7 +127,7 @@
   .skill-tile span { font-size: 10px; text-align: center; line-height: 1.15; }
   .skill-more { font-size: 11.5px; color: var(--muted); margin-top: 8px; }
 
-  #projects { left: 768px; top: 92px; width: 470px; max-height: calc(100vh - 120px); }
+  #projects { left: 640px; top: 92px; width: 580px; max-height: calc(100vh - 120px); }
   #projects .body { padding: 18px; display: flex; flex-direction: column; gap: 14px; }
   .project {
     display: flex; gap: 16px; align-items: flex-start; padding: 12px;
@@ -170,9 +185,10 @@
 <header class="menubar">
   <span class="brand">DNYANESHWARI OS</span>
   <nav class="navlinks" style="display:flex; gap:24px">
+    <button class="link" data-open="about">About</button>
+    <button class="link" data-open="experience">Experience</button>
     <button class="link" data-open="projects">Projects</button>
     <button class="link" data-open="skills">Skills</button>
-    <button class="link" data-open="about">About</button>
     <button class="link" data-open="contact">Contact</button>
   </nav>
   <span class="status">Open to AI Eng · SWE · FDE roles <span class="dot">●</span></span>
@@ -184,6 +200,10 @@
     <button class="icon" data-open="about">
       <svg width="44" height="44" viewBox="0 0 44 44" aria-hidden="true"><rect x="2" y="2" width="40" height="40" rx="4" fill="#fff" stroke="#0F1B2D" stroke-width="2"/><circle cx="22" cy="17" r="7" fill="none" stroke="#0F1B2D" stroke-width="2.5"/><path d="M9 35c0-7 6-11 13-11s13 4 13 11" fill="none" stroke="#0F1B2D" stroke-width="2.5"/></svg>
       about_me.txt
+    </button>
+    <button class="icon" data-open="experience">
+      <svg width="48" height="40" viewBox="0 0 48 40" aria-hidden="true"><rect x="2" y="10" width="44" height="28" rx="2" fill="var(--accent)" stroke="#0F1B2D" stroke-width="2"/><path d="M16 10V6a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v4" fill="none" stroke="#0F1B2D" stroke-width="2"/><path d="M2 20h44" stroke="#0F1B2D" stroke-width="2"/></svg>
+      work_history.log
     </button>
     <button class="icon" data-open="projects">
       <svg width="52" height="42" viewBox="0 0 52 42" aria-hidden="true"><path d="M2 6h18l5 5h25v29H2z" fill="var(--accent)" stroke="#0F1B2D" stroke-width="2"/></svg>
@@ -218,6 +238,37 @@
         <div class="prompt">&gt; edu: MS Computer Science, San Diego State University '26<br>&gt; <span class="cursor"></span></div>
       </div>
     </div>
+    <div class="resize-handle" aria-hidden="true"></div>
+  </section>
+
+  <section class="window" id="experience" aria-labelledby="experience-title" hidden>
+    <div class="titlebar slate"><span id="experience-title">work_history.log</span><span class="controls"><button aria-label="Close experience window" data-close>×</button></span></div>
+    <div class="body">
+      <div>&gt; cat work_history.log</div>
+
+      <div class="job">
+        <span class="when">Aug 2025 – Jun 2026</span>
+        <h3>Software Engineer, AI · LPL Financial</h3>
+        <div class="where">San Diego, CA</div>
+        <ul>
+          <li>Built an AI copilot for financial advisors that plans, searches and answers in real time, with a human checking in wherever it matters — cut meeting prep from 45 minutes to under 15.</li>
+          <li>The retrieval system behind it holds 92% accuracy, checked automatically against real evaluation sets, not just at launch.</li>
+          <li>Every update runs through automated testing before it ever reaches an advisor.</li>
+        </ul>
+      </div>
+
+      <div class="job">
+        <span class="when">Aug 2022 – Jun 2024</span>
+        <h3>Software Engineer · Cognizant Technology Solutions</h3>
+        <div class="where">Mumbai, India</div>
+        <ul>
+          <li>Owned machine learning models that flag risky insurance claims, with real money riding on the call — 76% recall on fraudulent claims.</li>
+          <li>Trained a language model to pre-screen claim notes before a human ever reads them, cutting analyst review time roughly in half.</li>
+          <li>Built the data pipeline and the services behind it, serving predictions in under 300ms, fast enough to use live.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="resize-handle" aria-hidden="true"></div>
   </section>
 
   <section class="window" id="skills" aria-labelledby="skills-title" hidden>
@@ -314,6 +365,7 @@
         <div class="skill-more">+ SageMaker · CloudWatch</div>
       </div>
     </div>
+    <div class="resize-handle" aria-hidden="true"></div>
   </section>
 
   <section class="window" id="projects" aria-labelledby="projects-title" hidden>
@@ -371,6 +423,7 @@
       </a>
       <a class="more" href="https://github.com/Danny18-ops" target="_blank" rel="noopener">open on GitHub →</a>
     </div>
+    <div class="resize-handle" aria-hidden="true"></div>
   </section>
 
   <section class="window" id="contact" aria-labelledby="contact-title" hidden>
@@ -381,6 +434,7 @@
       <div class="email">rautd3940@gmail.com</div>
       <a class="btn" href="mailto:rautd3940@gmail.com?subject=Let%27s%20build%20something">Connect via email →</a>
     </div>
+    <div class="resize-handle" aria-hidden="true"></div>
   </section>
 
   <aside class="sticky">
@@ -425,6 +479,27 @@
       bar.addEventListener('pointermove', move);
       bar.addEventListener('pointerup', up);
     });
+
+    // Resize from the bottom-right grip (desktop only)
+    const handle = win.querySelector('.resize-handle');
+    if (handle) {
+      handle.addEventListener('pointerdown', (e) => {
+        if (!isDesktop()) return;
+        const startX = e.clientX, startY = e.clientY;
+        const startW = win.offsetWidth, startH = win.offsetHeight;
+        handle.setPointerCapture(e.pointerId);
+        const move = (ev) => {
+          const maxW = window.innerWidth - win.offsetLeft - 20;
+          const maxH = window.innerHeight - win.offsetTop - 20;
+          win.style.width = Math.min(Math.max(startW + ev.clientX - startX, 320), maxW) + 'px';
+          win.style.height = Math.min(Math.max(startH + ev.clientY - startY, 220), maxH) + 'px';
+          win.style.maxHeight = 'none';
+        };
+        const up = () => { handle.removeEventListener('pointermove', move); handle.removeEventListener('pointerup', up); };
+        handle.addEventListener('pointermove', move);
+        handle.addEventListener('pointerup', up);
+      });
+    }
   });
 
   // Menu-bar clock
