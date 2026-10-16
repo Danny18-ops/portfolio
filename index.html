@@ -92,17 +92,25 @@
   .controls button:hover { background: rgba(0,0,0,.12); }
   .body { padding: 24px 28px; overflow: auto; }
 
-  #about { left: 168px; top: 76px; width: 548px; }
-  #about h1 { margin: 0; font-family: var(--display); font-size: 56px; line-height: .98; letter-spacing: -1.5px; }
+  #about { left: 168px; top: 76px; width: 600px; }
+  #about .body { display: flex; gap: 22px; align-items: flex-start; }
+  #about .photo { flex: none; width: 112px; height: 148px; object-fit: cover; border: 2px solid var(--ink); background: var(--soft); }
+  #about h1 { margin: 0; font-family: var(--display); font-size: 48px; line-height: .98; letter-spacing: -1.5px; }
   #about p { margin: 14px 0; font-size: 15px; line-height: 1.6; }
   .prompt { font-size: 13px; line-height: 1.7; }
   .cursor { display: inline-block; width: 9px; height: 16px; background: var(--ink); vertical-align: -3px; animation: blink 1s steps(1) infinite; }
   @keyframes blink { 50% { opacity: 0; } }
 
-  #skills { left: 360px; top: 120px; width: 620px; max-height: calc(100vh - 160px); }
-  #skills .body { padding: 20px 22px; font-size: 13px; line-height: 1.6; display: flex; flex-direction: column; gap: 10px; }
+  #skills { left: 360px; top: 120px; width: 660px; max-height: calc(100vh - 160px); }
+  #skills .body { padding: 20px 22px; font-size: 13px; line-height: 1.6; display: flex; flex-direction: column; gap: 16px; }
   #skills .row { display: grid; grid-template-columns: 110px 1fr; gap: 12px; }
   #skills .k { font-weight: 600; background: var(--accent); padding: 0 6px; align-self: start; border: 1.5px solid var(--ink); }
+  .skill-group .k { display: inline-block; margin-bottom: 9px; }
+  .skill-grid { display: flex; flex-wrap: wrap; gap: 12px; }
+  .skill-tile { display: flex; flex-direction: column; align-items: center; gap: 5px; width: 58px; }
+  .skill-tile img { width: 36px; height: 36px; border-radius: 50%; background: #fff; border: 2px solid var(--ink); padding: 7px; object-fit: contain; }
+  .skill-tile span { font-size: 10px; text-align: center; line-height: 1.15; }
+  .skill-more { font-size: 11.5px; color: var(--muted); margin-top: 8px; }
 
   #projects { left: 768px; top: 92px; width: 470px; max-height: calc(100vh - 120px); }
   #projects .body { padding: 18px; display: flex; flex-direction: column; gap: 14px; }
@@ -118,13 +126,23 @@
     font-family: var(--display); font-weight: 700; font-size: 30px;
   }
   .thumb img { width: 100%; height: 100%; object-fit: cover; }
-  .project .name { font-size: 15px; font-weight: 600; }
+  .thumb svg { width: 38px; height: 38px; }
+  .project .name { font-size: 16px; font-weight: 800; color: #1C2D46; }
   .project .desc { font-size: 13px; line-height: 1.5; margin: 6px 0; }
   .project .tags { font-size: 11px; color: var(--muted); }
   .more { align-self: flex-end; font-size: 13px; font-weight: 600; }
 
   #contact { left: 420px; top: 220px; width: 420px; }
   #contact .body { font-size: 14px; line-height: 1.8; }
+  #contact .email { font-size: 19px; font-weight: 700; margin-top: 4px; word-break: break-all; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px; margin-top: 16px;
+    background: var(--accent); border: 2px solid var(--ink); color: var(--ink);
+    padding: 10px 16px; font: inherit; font-size: 13px; font-weight: 700;
+    text-decoration: none; box-shadow: 4px 4px 0 var(--ink);
+    transition: transform .12s, box-shadow .12s;
+  }
+  .btn:hover { transform: translate(-2px,-2px); box-shadow: 6px 6px 0 var(--ink); color: var(--ink); }
 
   .sticky {
     position: absolute; left: 230px; top: 540px; width: 330px; z-index: 2;
@@ -139,7 +157,8 @@
     .icons { position: static; flex-direction: row; flex-wrap: wrap; width: auto; gap: 4px; }
     .window, .sticky { position: static !important; width: 100% !important; transform: none; }
     .titlebar { cursor: default; }
-    #about h1 { font-size: 42px; }
+    #about .body { flex-direction: column; }
+    #about h1 { font-size: 38px; }
     .menubar { gap: 14px; overflow-x: auto; }
     .menubar .clock, .menubar .navlinks { display: none; }
   }
@@ -187,10 +206,13 @@
   <section class="window" id="about" aria-labelledby="about-title">
     <div class="titlebar yellow"><span id="about-title">about_me.txt</span><span class="controls"><button aria-label="Close about window" data-close>×</button></span></div>
     <div class="body">
-      <div class="prompt">&gt; whoami</div>
-      <h1>Hi, I'm<br>Dnyaneshwari.</h1>
-      <p>AI &amp; software engineer with 3+ years building production systems: LLM agents, RAG, APIs and full-stack apps. I work like a forward deployed engineer, starting from the user's real problem and staying until it runs reliably in production.</p>
-      <div class="prompt">&gt; edu: MS Computer Science, San Diego State University '26<br>&gt; <span class="cursor"></span></div>
+      <img class="photo" src="assets/photos/headshot.png" alt="Photo of Dnyaneshwari Raut" width="112" height="148">
+      <div>
+        <div class="prompt">&gt; whoami</div>
+        <h1>Hi, I'm<br>Dnyaneshwari.</h1>
+        <p>AI &amp; software engineer with 3+ years building production systems: LLM agents, RAG, APIs and full-stack apps. I work like a forward deployed engineer, starting from the user's real problem and staying until it runs reliably in production.</p>
+        <div class="prompt">&gt; edu: MS Computer Science, San Diego State University '26<br>&gt; <span class="cursor"></span></div>
+      </div>
     </div>
   </section>
 
@@ -198,13 +220,96 @@
     <div class="titlebar dark"><span id="skills-title">skills.sh</span><span class="controls"><button aria-label="Close skills window" data-close>×</button></span></div>
     <div class="body">
       <div>&gt; ./skills --list</div>
-      <div class="row"><span class="k">languages</span><span>Python · Java · TypeScript · JavaScript · SQL · Go · C/C++ · C# · R · Shell</span></div>
-      <div class="row"><span class="k">llm / genai</span><span>RAG · AI agents · multi-agent systems · MCP · LangChain · LangGraph · LlamaIndex · CrewAI · DSPy · OpenAI &amp; Anthropic APIs · Hugging Face</span></div>
-      <div class="row"><span class="k">ai / ml</span><span>prompt engineering · embeddings · fine-tuning (LoRA/PEFT) · model evaluation · guardrails · NLP · PyTorch · scikit-learn · LLMOps</span></div>
-      <div class="row"><span class="k">backend</span><span>FastAPI · Spring Boot · Node.js · Express · microservices · event-driven architecture · REST · GraphQL · WebSockets · webhooks</span></div>
-      <div class="row"><span class="k">frontend</span><span>React · Angular · TypeScript · HTML · CSS</span></div>
-      <div class="row"><span class="k">data</span><span>PostgreSQL · MySQL · MongoDB · Redis · Kafka · Elasticsearch / OpenSearch · Pinecone · FAISS · ChromaDB · ETL pipelines</span></div>
-      <div class="row"><span class="k">cloud / ops</span><span>AWS · Azure · Docker · Kubernetes · Terraform · GitHub Actions · Jenkins · MLflow · SageMaker · CloudWatch</span></div>
+
+      <div class="skill-group">
+        <span class="k">languages</span>
+        <div class="skill-grid">
+          <div class="skill-tile"><img src="https://cdn.simpleicons.org/python" alt="" loading="lazy"><span>Python</span></div>
+          <div class="skill-tile"><img src="https://cdn.simpleicons.org/openjdk" alt="" loading="lazy"><span>Java</span></div>
+          <div class="skill-tile"><img src="https://cdn.simpleicons.org/typescript" alt="" loading="lazy"><span>TypeScript</span></div>
+          <div class="skill-tile"><img src="https://cdn.simpleicons.org/javascript" alt="" loading="lazy"><span>JavaScript</span></div>
+          <div class="skill-tile"><img src="https://cdn.simpleicons.org/go" alt="" loading="lazy"><span>Go</span></div>
+          <div class="skill-tile"><img src="https://cdn.simpleicons.org/cplusplus" alt="" loading="lazy"><span>C++</span></div>
+          <div class="skill-tile"><img src="https://cdn.simpleicons.org/dotnet" alt="" loading="lazy"><span>C#</span></div>
+          <div class="skill-tile"><img src="https://cdn.simpleicons.org/r" alt="" loading="lazy"><span>R</span></div>
+          <div class="skill-tile"><img src="https://cdn.simpleicons.org/gnubash" alt="" loading="lazy"><span>Shell</span></div>
+        </div>
+        <div class="skill-more">+ SQL · C</div>
+      </div>
+
+      <div class="skill-group">
+        <span class="k">llm / genai</span>
+        <div class="skill-grid">
+          <div class="skill-tile"><img src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/openai.svg" alt="" loading="lazy"><span>OpenAI</span></div>
+          <div class="skill-tile"><img src="https://cdn.simpleicons.org/anthropic" alt="" loading="lazy"><span>Anthropic</span></div>
+          <div class="skill-tile"><img src="https://cdn.simpleicons.org/langchain" alt="" loading="lazy"><span>LangChain</span></div>
+          <div class="skill-tile"><img src="https://cdn.simpleicons.org/langgraph" alt="" loading="lazy"><span>LangGraph</span></div>
+          <div class="skill-tile"><img src="https://cdn.simpleicons.org/crewai" alt="" loading="lazy"><span>CrewAI</span></div>
+          <div class="skill-tile"><img src="https://cdn.simpleicons.org/huggingface" alt="" loading="lazy"><span>Hugging Face</span></div>
+        </div>
+        <div class="skill-more">+ RAG · AI agents · multi-agent systems · MCP · LlamaIndex · DSPy</div>
+      </div>
+
+      <div class="skill-group">
+        <span class="k">ai / ml</span>
+        <div class="skill-grid">
+          <div class="skill-tile"><img src="https://cdn.simpleicons.org/pytorch" alt="" loading="lazy"><span>PyTorch</span></div>
+          <div class="skill-tile"><img src="https://cdn.simpleicons.org/scikitlearn" alt="" loading="lazy"><span>scikit-learn</span></div>
+        </div>
+        <div class="skill-more">+ prompt engineering · embeddings · fine-tuning (LoRA/PEFT) · model evaluation · guardrails · NLP · LLMOps</div>
+      </div>
+
+      <div class="skill-group">
+        <span class="k">backend</span>
+        <div class="skill-grid">
+          <div class="skill-tile"><img src="https://cdn.simpleicons.org/fastapi" alt="" loading="lazy"><span>FastAPI</span></div>
+          <div class="skill-tile"><img src="https://cdn.simpleicons.org/springboot" alt="" loading="lazy"><span>Spring Boot</span></div>
+          <div class="skill-tile"><img src="https://cdn.simpleicons.org/nodedotjs" alt="" loading="lazy"><span>Node.js</span></div>
+          <div class="skill-tile"><img src="https://cdn.simpleicons.org/express" alt="" loading="lazy"><span>Express</span></div>
+          <div class="skill-tile"><img src="https://cdn.simpleicons.org/graphql" alt="" loading="lazy"><span>GraphQL</span></div>
+        </div>
+        <div class="skill-more">+ microservices · event-driven architecture · REST · WebSockets · webhooks</div>
+      </div>
+
+      <div class="skill-group">
+        <span class="k">frontend</span>
+        <div class="skill-grid">
+          <div class="skill-tile"><img src="https://cdn.simpleicons.org/react" alt="" loading="lazy"><span>React</span></div>
+          <div class="skill-tile"><img src="https://cdn.simpleicons.org/angular" alt="" loading="lazy"><span>Angular</span></div>
+          <div class="skill-tile"><img src="https://cdn.simpleicons.org/html5" alt="" loading="lazy"><span>HTML</span></div>
+          <div class="skill-tile"><img src="https://cdn.simpleicons.org/css" alt="" loading="lazy"><span>CSS</span></div>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <span class="k">data</span>
+        <div class="skill-grid">
+          <div class="skill-tile"><img src="https://cdn.simpleicons.org/postgresql" alt="" loading="lazy"><span>PostgreSQL</span></div>
+          <div class="skill-tile"><img src="https://cdn.simpleicons.org/mysql" alt="" loading="lazy"><span>MySQL</span></div>
+          <div class="skill-tile"><img src="https://cdn.simpleicons.org/mongodb" alt="" loading="lazy"><span>MongoDB</span></div>
+          <div class="skill-tile"><img src="https://cdn.simpleicons.org/redis" alt="" loading="lazy"><span>Redis</span></div>
+          <div class="skill-tile"><img src="https://cdn.simpleicons.org/apachekafka" alt="" loading="lazy"><span>Kafka</span></div>
+          <div class="skill-tile"><img src="https://cdn.simpleicons.org/elasticsearch" alt="" loading="lazy"><span>Elasticsearch</span></div>
+          <div class="skill-tile"><img src="https://cdn.simpleicons.org/opensearch" alt="" loading="lazy"><span>OpenSearch</span></div>
+        </div>
+        <div class="skill-more">+ Pinecone · FAISS · ChromaDB · ETL pipelines</div>
+      </div>
+
+      <div class="skill-group">
+        <span class="k">cloud / ops</span>
+        <div class="skill-grid">
+          <div class="skill-tile"><img src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/amazonaws.svg" alt="" loading="lazy"><span>AWS</span></div>
+          <div class="skill-tile"><img src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/microsoftazure.svg" alt="" loading="lazy"><span>Azure</span></div>
+          <div class="skill-tile"><img src="https://cdn.simpleicons.org/docker" alt="" loading="lazy"><span>Docker</span></div>
+          <div class="skill-tile"><img src="https://cdn.simpleicons.org/kubernetes" alt="" loading="lazy"><span>Kubernetes</span></div>
+          <div class="skill-tile"><img src="https://cdn.simpleicons.org/terraform" alt="" loading="lazy"><span>Terraform</span></div>
+          <div class="skill-tile"><img src="https://cdn.simpleicons.org/githubactions" alt="" loading="lazy"><span>GH Actions</span></div>
+          <div class="skill-tile"><img src="https://cdn.simpleicons.org/jenkins" alt="" loading="lazy"><span>Jenkins</span></div>
+          <div class="skill-tile"><img src="https://cdn.simpleicons.org/mlflow" alt="" loading="lazy"><span>MLflow</span></div>
+        </div>
+        <div class="skill-more">+ SageMaker · CloudWatch</div>
+      </div>
+
       <div class="row"><span class="k">security</span><span>OAuth2 · JWT · SSO · RBAC</span></div>
       <div class="row"><span class="k">delivery</span><span>technical discovery · requirements gathering · rapid prototyping · solution design · stakeholder management · production rollouts</span></div>
     </div>
@@ -214,7 +319,9 @@
     <div class="titlebar dark"><span id="projects-title">~/projects</span><span class="controls"><button aria-label="Close projects window" data-close>×</button></span></div>
     <div class="body">
       <a class="project" href="https://github.com/Danny18-ops/hackmatch-app" target="_blank" rel="noopener">
-        <div class="thumb" style="background:var(--accent)">HM</div>
+        <div class="thumb" style="background:var(--accent)">
+          <svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="17" cy="17" r="10" fill="none" stroke="#0F1B2D" stroke-width="3"/><path d="M25 25l9 9" stroke="#0F1B2D" stroke-width="3" stroke-linecap="round"/></svg>
+        </div>
         <div>
           <div class="name">hackmatch.app</div>
           <div class="desc">AI hackathon finder: live event scraping, RAG semantic search and NLP skill-matching to recommend events that fit you.</div>
@@ -222,7 +329,9 @@
         </div>
       </a>
       <a class="project" href="https://github.com/Danny18-ops/HookRelay" target="_blank" rel="noopener">
-        <div class="thumb" style="background:#9FC3E8">HR</div>
+        <div class="thumb" style="background:#9FC3E8">
+          <svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="16" fill="none" stroke="#0F1B2D" stroke-width="3"/><path d="M22 7L11 22h7l-2 11 11-15h-7z" fill="#0F1B2D"/></svg>
+        </div>
         <div>
           <div class="name">hookrelay.sys</div>
           <div class="desc">Reliable webhook delivery with auth, retries, idempotency and live event monitoring.</div>
@@ -230,11 +339,33 @@
         </div>
       </a>
       <a class="project" href="https://github.com/Danny18-ops/multi-agent-research-system" target="_blank" rel="noopener">
-        <div class="thumb" style="background:#F6B8C8">MA</div>
+        <div class="thumb" style="background:#F6B8C8">
+          <svg viewBox="0 0 40 40" aria-hidden="true"><path d="M10 30L20 10M30 30L20 10M10 30L30 30" stroke="#0F1B2D" stroke-width="2.5" fill="none"/><circle cx="10" cy="30" r="4.5" fill="#0F1B2D"/><circle cx="30" cy="30" r="4.5" fill="#0F1B2D"/><circle cx="20" cy="10" r="4.5" fill="#0F1B2D"/></svg>
+        </div>
         <div>
           <div class="name">research_agents.py</div>
           <div class="desc">Autonomous multi-agent research system: specialized agents research, synthesize findings and write structured reports.</div>
           <div class="tags">CrewAI · LangGraph · OpenAI API</div>
+        </div>
+      </a>
+      <a class="project" href="https://github.com/Danny18-ops/contract-genesis-ai" target="_blank" rel="noopener">
+        <div class="thumb" style="background:#BFE8C9">
+          <svg viewBox="0 0 40 40" aria-hidden="true"><rect x="9" y="4" width="22" height="32" rx="2" fill="none" stroke="#0F1B2D" stroke-width="2.5"/><path d="M14 13h12M14 20h12M14 27h7" stroke="#0F1B2D" stroke-width="2" stroke-linecap="round"/></svg>
+        </div>
+        <div>
+          <div class="name">gen-contract</div>
+          <div class="desc">Drafts agreements clause by clause from plain-English deal terms — liability, payment terms and termination — instead of one wall of legalese.</div>
+          <div class="tags">React · TypeScript · Supabase · shadcn/ui</div>
+        </div>
+      </a>
+      <a class="project" href="https://github.com/Danny18-ops/bank-computer-use-automation" target="_blank" rel="noopener">
+        <div class="thumb" style="background:#E8C9A0">
+          <svg viewBox="0 0 40 40" aria-hidden="true"><path d="M12 6l18 8-7 3 6 9-4 2-6-9-4 6z" fill="#0F1B2D"/></svg>
+        </div>
+        <div>
+          <div class="name">computer-use-automation</div>
+          <div class="desc">An LLM agent discovers how to complete a banking task it's never seen, then converts the run into a deterministic, replayable recipe — with guardrails and human-in-the-loop escalation when it gets stuck.</div>
+          <div class="tags">Python · LLM Agents · Guardrails</div>
         </div>
       </a>
       <a class="more" href="https://github.com/Danny18-ops" target="_blank" rel="noopener">open on GitHub →</a>
@@ -244,16 +375,17 @@
   <section class="window" id="contact" aria-labelledby="contact-title" hidden>
     <div class="titlebar yellow"><span id="contact-title">say_hi.mail</span><span class="controls"><button aria-label="Close contact window" data-close>×</button></span></div>
     <div class="body">
-      <div>to: <a href="mailto:dnyaneshwariraut2118@gmail.com">dnyaneshwariraut2118@gmail.com</a></div>
-      <div>subject: let's build something</div>
-      <p style="margin:12px 0 0">Hiring for an FDE or AI engineering role? I'd love to hear about the problem you're solving.</p>
+      <p style="margin:0">Hiring for an FDE or AI engineering role? I'd love to hear about the problem you're solving.</p>
+      <div style="margin-top:14px">email</div>
+      <div class="email">rautd3940@gmail.com</div>
+      <a class="btn" href="mailto:rautd3940@gmail.com?subject=Let%27s%20build%20something">Connect via email →</a>
     </div>
   </section>
 
   <aside class="sticky">
     <strong>sticky.note</strong><br>
     status: looking for my next AI / software / FDE role<br>
-    superpower: talking to users AND shipping code<br>
+    superpower: shipping production LLM agents &amp; RAG pipelines, not just notebooks<br>
     tip: open skills.sh for my full stack
   </aside>
 </main>
