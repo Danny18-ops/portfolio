@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dnyaneshwari Raut — AI &amp; Software Engineer</title>
+<meta name="description" content="Dnyaneshwari Raut — AI engineer, software engineer and forward deployed engineer. LLM agents, RAG, APIs and full-stack production systems.">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="canonical" href="https://dnyaneshwariraut.com/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://dnyaneshwariraut.com/">
+<meta property="og:title" content="Dnyaneshwari Raut — AI &amp; Software Engineer">
+<meta property="og:description" content="AI engineer, software engineer and forward deployed engineer. LLM agents, RAG, APIs and full-stack production systems.">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Dnyaneshwari Raut — AI &amp; Software Engineer">
+<meta name="twitter:description" content="AI engineer, software engineer and forward deployed engineer. LLM agents, RAG, APIs and full-stack production systems.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0F1B2D;
+    --accent: #F2C230;
+    --desk: #BFD0E0;
+    --grid: #AFC2D6;
+    --paper: #FFFFFF;
+    --soft: #F4F7FB;
+    --muted: #3E5068;
+    --mono: 'IBM Plex Mono', ui-monospace, monospace;
+    --display: 'Space Grotesk', system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; }
+  body {
+    font-family: var(--mono);
+    color: var(--ink);
+    background-color: var(--desk);
+    background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size: 32px 32px;
+    overflow: hidden;
+  }
+  a { color: var(--ink); }
+  a:hover { color: #2B4A78; }
+  :focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
+
+  /* Menu bar */
+  .menubar {
+    position: fixed; inset: 0 0 auto 0; height: 40px; z-index: 1000;
+    background: var(--ink); color: #E9EEF4;
+    display: flex; align-items: center; gap: 24px; padding: 0 20px; font-size: 13px;
+  }
+  .menubar .brand { font-family: var(--display); font-weight: 700; letter-spacing: .5px; color: var(--accent); }
+  .menubar a, .menubar button.link { color: #E9EEF4; text-decoration: none; background: none; border: 0; font: inherit; cursor: pointer; padding: 8px 0; }
+  .menubar a:hover, .menubar button.link:hover { color: var(--accent); }
+  .menubar .status { margin-left: auto; white-space: nowrap; }
+  .menubar .dot { color: var(--accent); }
+  .menubar .clock { margin-left: 16px; opacity: .8; }
+
+  /* Desktop icons */
+  .icons {
+    position: fixed; left: 24px; top: 68px; z-index: 1;
+    display: flex; flex-direction: column; gap: 18px; width: 104px;
+  }
+  .icon {
+    display: flex; flex-direction: column; align-items: center; gap: 6px;
+    padding: 8px 4px; font: inherit; font-size: 12px; color: var(--ink);
+    background: none; border: 2px solid transparent; cursor: pointer; text-decoration: none; min-height: 44px;
+  }
+  .icon:hover, .icon:focus-visible { background: rgba(255,255,255,.45); border-color: var(--ink); }
+
+  /* Windows */
+  .window {
+    position: absolute; background: var(--paper);
+    border: 2px solid var(--ink); box-shadow: 8px 8px 0 var(--ink);
+    display: flex; flex-direction: column;
+  }
+  .window[hidden] { display: none; }
+  .titlebar {
+    height: 36px; flex: none; display: flex; align-items: center; justify-content: space-between;
+    padding: 0 6px 0 12px; font-size: 13px; font-weight: 600;
+    border-bottom: 2px solid var(--ink); cursor: grab; user-select: none; touch-action: none;
+  }
+  .titlebar:active { cursor: grabbing; }
+  .titlebar.yellow { background: var(--accent); }
+  .titlebar.dark { background: var(--ink); color: #fff; }
+  .titlebar.slate { background: #1C2D46; color: #E9EEF4; }
+  .controls { display: flex; gap: 2px; }
+  .controls button {
+    width: 28px; height: 28px; border: 0; background: none; color: inherit;
+    font: inherit; font-size: 15px; cursor: pointer; line-height: 1;
+  }
+  .controls button:hover { background: rgba(0,0,0,.12); }
+  .body { padding: 24px 28px; overflow: auto; }
+
+  #about { left: 168px; top: 76px; width: 548px; }
+  #about h1 { margin: 0; font-family: var(--display); font-size: 56px; line-height: .98; letter-spacing: -1.5px; }
+  #about p { margin: 14px 0; font-size: 15px; line-height: 1.6; }
+  .prompt { font-size: 13px; line-height: 1.7; }
+  .cursor { display: inline-block; width: 9px; height: 16px; background: var(--ink); vertical-align: -3px; animation: blink 1s steps(1) infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  #skills { left: 360px; top: 120px; width: 620px; max-height: calc(100vh - 160px); }
+  #skills .body { padding: 20px 22px; font-size: 13px; line-height: 1.6; display: flex; flex-direction: column; gap: 10px; }
+  #skills .row { display: grid; grid-template-columns: 110px 1fr; gap: 12px; }
+  #skills .k { font-weight: 600; background: var(--accent); padding: 0 6px; align-self: start; border: 1.5px solid var(--ink); }
+
+  #projects { left: 768px; top: 92px; width: 470px; max-height: calc(100vh - 120px); }
+  #projects .body { padding: 18px; display: flex; flex-direction: column; gap: 14px; }
+  .project {
+    display: flex; gap: 16px; align-items: flex-start; padding: 12px;
+    border: 2px solid var(--ink); background: var(--soft); text-decoration: none;
+    transition: transform .12s, box-shadow .12s;
+  }
+  .project:hover { transform: translate(-2px,-2px); box-shadow: 4px 4px 0 var(--ink); color: var(--ink); }
+  .thumb {
+    width: 84px; height: 84px; flex: none; border: 2px solid var(--ink);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--display); font-weight: 700; font-size: 30px;
+  }
+  .thumb img { width: 100%; height: 100%; object-fit: cover; }
+  .project .name { font-size: 15px; font-weight: 600; }
+  .project .desc { font-size: 13px; line-height: 1.5; margin: 6px 0; }
+  .project .tags { font-size: 11px; color: var(--muted); }
+  .more { align-self: flex-end; font-size: 13px; font-weight: 600; }
+
+  #contact { left: 420px; top: 220px; width: 420px; }
+  #contact .body { font-size: 14px; line-height: 1.8; }
+
+  .sticky {
+    position: absolute; left: 230px; top: 540px; width: 330px; z-index: 2;
+    background: var(--accent); border: 2px solid var(--ink);
+    padding: 16px 18px; font-size: 13px; line-height: 1.6; transform: rotate(-2deg);
+  }
+
+  /* Phone / small screens: stack everything, no dragging */
+  @media (max-width: 900px) {
+    body { overflow: auto; }
+    .desktop { padding: 56px 16px 32px; display: flex; flex-direction: column; gap: 24px; }
+    .icons { position: static; flex-direction: row; flex-wrap: wrap; width: auto; gap: 4px; }
+    .window, .sticky { position: static !important; width: 100% !important; transform: none; }
+    .titlebar { cursor: default; }
+    #about h1 { font-size: 42px; }
+    .menubar { gap: 14px; overflow-x: auto; }
+    .menubar .clock, .menubar .navlinks { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) { .cursor { animation: none; } .project { transition: none; } }
+</style>
+</head>
+<body>
+
+<header class="menubar">
+  <span class="brand">DNYANESHWARI OS</span>
+  <nav class="navlinks" style="display:flex; gap:24px">
+    <button class="link" data-open="projects">Projects</button>
+    <button class="link" data-open="skills">Skills</button>
+    <button class="link" data-open="about">About</button>
+    <button class="link" data-open="contact">Contact</button>
+  </nav>
+  <span class="status">Open to AI Eng · SWE · FDE roles <span class="dot">●</span></span>
+  <span class="clock" id="clock" aria-hidden="true"></span>
+</header>
+
+<main class="desktop">
+  <nav class="icons" aria-label="Desktop">
+    <button class="icon" data-open="projects">
+      <svg width="52" height="42" viewBox="0 0 52 42" aria-hidden="true"><path d="M2 6h18l5 5h25v29H2z" fill="var(--accent)" stroke="#0F1B2D" stroke-width="2"/></svg>
+      projects/
+    </button>
+    <button class="icon" data-open="skills">
+      <svg width="44" height="44" viewBox="0 0 44 44" aria-hidden="true"><rect x="2" y="2" width="40" height="40" fill="#0F1B2D"/><path d="M10 14l8 8-8 8M22 30h12" stroke="var(--accent)" stroke-width="3" fill="none"/></svg>
+      skills.sh
+    </button>
+    <button class="icon" data-open="contact">
+      <svg width="48" height="40" viewBox="0 0 48 40" aria-hidden="true"><rect x="2" y="2" width="44" height="36" fill="#fff" stroke="#0F1B2D" stroke-width="2"/><path d="M2 4l22 18L46 4" fill="none" stroke="#0F1B2D" stroke-width="2"/></svg>
+      say_hi.mail
+    </button>
+    <a class="icon" href="https://www.linkedin.com/in/dnyaneshwarii" target="_blank" rel="noopener">
+      <svg width="44" height="44" viewBox="0 0 44 44" aria-hidden="true"><rect x="2" y="2" width="40" height="40" rx="4" fill="#fff" stroke="#0F1B2D" stroke-width="2"/><path d="M12 18v14M12 12v1M19 32V18M19 24c0-4 3-6 6-6s6 2 6 6v8" stroke="#0F1B2D" stroke-width="3" fill="none"/></svg>
+      linkedin.lnk
+    </a>
+    <a class="icon" href="https://github.com/Danny18-ops" target="_blank" rel="noopener">
+      <svg width="44" height="44" viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="20" fill="#fff" stroke="#0F1B2D" stroke-width="2"/><path d="M15 30l2-6M29 30l-2-6M14 20c0-5 4-8 8-8s8 3 8 8-4 6-8 6-8-1-8-6z" stroke="#0F1B2D" stroke-width="2" fill="none"/></svg>
+      github
+    </a>
+  </nav>
+
+  <section class="window" id="about" aria-labelledby="about-title">
+    <div class="titlebar yellow"><span id="about-title">about_me.txt</span><span class="controls"><button aria-label="Close about window" data-close>×</button></span></div>
+    <div class="body">
+      <div class="prompt">&gt; whoami</div>
+      <h1>Hi, I'm<br>Dnyaneshwari.</h1>
+      <p>AI &amp; software engineer with 3+ years building production systems: LLM agents, RAG, APIs and full-stack apps. I work like a forward deployed engineer, starting from the user's real problem and staying until it runs reliably in production.</p>
+      <div class="prompt">&gt; edu: MS Computer Science, San Diego State University '26<br>&gt; <span class="cursor"></span></div>
+    </div>
+  </section>
+
+  <section class="window" id="skills" aria-labelledby="skills-title" hidden>
+    <div class="titlebar dark"><span id="skills-title">skills.sh</span><span class="controls"><button aria-label="Close skills window" data-close>×</button></span></div>
+    <div class="body">
+      <div>&gt; ./skills --list</div>
+      <div class="row"><span class="k">languages</span><span>Python · Java · TypeScript · JavaScript · SQL · Go · C/C++ · C# · R · Shell</span></div>
+      <div class="row"><span class="k">llm / genai</span><span>RAG · AI agents · multi-agent systems · MCP · LangChain · LangGraph · LlamaIndex · CrewAI · DSPy · OpenAI &amp; Anthropic APIs · Hugging Face</span></div>
+      <div class="row"><span class="k">ai / ml</span><span>prompt engineering · embeddings · fine-tuning (LoRA/PEFT) · model evaluation · guardrails · NLP · PyTorch · scikit-learn · LLMOps</span></div>
+      <div class="row"><span class="k">backend</span><span>FastAPI · Spring Boot · Node.js · Express · microservices · event-driven architecture · REST · GraphQL · WebSockets · webhooks</span></div>
+      <div class="row"><span class="k">frontend</span><span>React · Angular · TypeScript · HTML · CSS</span></div>
+      <div class="row"><span class="k">data</span><span>PostgreSQL · MySQL · MongoDB · Redis · Kafka · Elasticsearch / OpenSearch · Pinecone · FAISS · ChromaDB · ETL pipelines</span></div>
+      <div class="row"><span class="k">cloud / ops</span><span>AWS · Azure · Docker · Kubernetes · Terraform · GitHub Actions · Jenkins · MLflow · SageMaker · CloudWatch</span></div>
+      <div class="row"><span class="k">security</span><span>OAuth2 · JWT · SSO · RBAC</span></div>
+      <div class="row"><span class="k">delivery</span><span>technical discovery · requirements gathering · rapid prototyping · solution design · stakeholder management · production rollouts</span></div>
+    </div>
+  </section>
+
+  <section class="window" id="projects" aria-labelledby="projects-title">
+    <div class="titlebar dark"><span id="projects-title">~/projects</span><span class="controls"><button aria-label="Close projects window" data-close>×</button></span></div>
+    <div class="body">
+      <a class="project" href="https://github.com/Danny18-ops/hackmatch-app" target="_blank" rel="noopener">
+        <div class="thumb" style="background:var(--accent)">HM</div>
+        <div>
+          <div class="name">hackmatch.app</div>
+          <div class="desc">AI hackathon finder: live event scraping, RAG semantic search and NLP skill-matching to recommend events that fit you.</div>
+          <div class="tags">React · FastAPI · PostgreSQL · RAG</div>
+        </div>
+      </a>
+      <a class="project" href="https://github.com/Danny18-ops/HookRelay" target="_blank" rel="noopener">
+        <div class="thumb" style="background:#9FC3E8">HR</div>
+        <div>
+          <div class="name">hookrelay.sys</div>
+          <div class="desc">Reliable webhook delivery with auth, retries, idempotency and live event monitoring.</div>
+          <div class="tags">Node.js · Express · MongoDB · BullMQ · React</div>
+        </div>
+      </a>
+      <a class="project" href="https://github.com/Danny18-ops/multi-agent-research-system" target="_blank" rel="noopener">
+        <div class="thumb" style="background:#F6B8C8">MA</div>
+        <div>
+          <div class="name">research_agents.py</div>
+          <div class="desc">Autonomous multi-agent research system: specialized agents research, synthesize findings and write structured reports.</div>
+          <div class="tags">CrewAI · LangGraph · OpenAI API</div>
+        </div>
+      </a>
+      <a class="more" href="https://github.com/Danny18-ops" target="_blank" rel="noopener">open on GitHub →</a>
+    </div>
+  </section>
+
+  <section class="window" id="contact" aria-labelledby="contact-title" hidden>
+    <div class="titlebar yellow"><span id="contact-title">say_hi.mail</span><span class="controls"><button aria-label="Close contact window" data-close>×</button></span></div>
+    <div class="body">
+      <div>to: <a href="mailto:dnyaneshwariraut2118@gmail.com">dnyaneshwariraut2118@gmail.com</a></div>
+      <div>subject: let's build something</div>
+      <p style="margin:12px 0 0">Hiring for an FDE or AI engineering role? I'd love to hear about the problem you're solving.</p>
+    </div>
+  </section>
+
+  <aside class="sticky">
+    <strong>sticky.note</strong><br>
+    status: looking for my next AI / software / FDE role<br>
+    superpower: talking to users AND shipping code<br>
+    tip: open skills.sh for my full stack
+  </aside>
+</main>
+
+<script>
+  // Window manager: open, close, focus, drag (desktop only)
+  const isDesktop = () => window.matchMedia('(min-width: 901px)').matches;
+  let z = 10;
+  const focusWin = (w) => { w.style.zIndex = ++z; };
+
+  document.querySelectorAll('[data-open]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const w = document.getElementById(btn.dataset.open);
+      w.hidden = false; focusWin(w);
+      if (!isDesktop()) w.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+  document.querySelectorAll('[data-close]').forEach(btn => {
+    btn.addEventListener('click', () => { btn.closest('.window').hidden = true; });
+  });
+
+  document.querySelectorAll('.window').forEach(win => {
+    win.addEventListener('pointerdown', () => focusWin(win));
+    const bar = win.querySelector('.titlebar');
+    bar.addEventListener('pointerdown', (e) => {
+      if (!isDesktop() || e.target.closest('button')) return;
+      const startX = e.clientX, startY = e.clientY;
+      const left = win.offsetLeft, top = win.offsetTop;
+      bar.setPointerCapture(e.pointerId);
+      const move = (ev) => {
+        const maxX = window.innerWidth - 80, maxY = window.innerHeight - 40;
+        win.style.left = Math.min(Math.max(left + ev.clientX - startX, -win.offsetWidth + 120), maxX) + 'px';
+        win.style.top = Math.min(Math.max(top + ev.clientY - startY, 40), maxY) + 'px';
+      };
+      const up = () => { bar.removeEventListener('pointermove', move); bar.removeEventListener('pointerup', up); };
+      bar.addEventListener('pointermove', move);
+      bar.addEventListener('pointerup', up);
+    });
+  });
+
+  // Menu-bar clock
+  const clock = document.getElementById('clock');
+  const tick = () => { clock.textContent = new Date().toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }); };
+  tick(); setInterval(tick, 30000);
+</script>
+</body>
+</html>
