@@ -6,24 +6,25 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 const roles = [
   {
     company: "LPL Financial",
-    role: "AI Engineer",
+    role: "Software Engineer, AI",
+    tone: "accent" as const,
     location: "San Diego, CA",
     period: "Aug 2025 – Jun 2026",
     achievements: [
       {
         headline: "Meeting prep: 45 min → under 15",
         detail:
-          "Built an agentic copilot for financial advisors: LangGraph wired into Azure OpenAI, Azure AI Search, and MCP connectors, with human-in-the-loop checkpoints wherever the stakes demanded one.",
+          "Built an AI copilot for financial advisors that researches, plans, and drafts answers in real time, with a human checking in wherever it matters.",
       },
       {
         headline: "92% answer accuracy, continuously proven",
         detail:
-          "The RAG framework underneath held 92% accuracy against evaluation sets, with every agent run traced in LangSmith and scored by LLM-as-judge evaluators.",
+          "The system behind it holds 92% accuracy, checked automatically against real evaluation sets, not just at launch.",
       },
       {
         headline: "No change ships without passing review",
         detail:
-          "Prompt and retrieval changes had to clear CI/CD regression suites before reaching an advisor. The system ran containerized on AKS and shipped through Azure DevOps.",
+          "Every update runs through automated testing before it ever reaches an advisor.",
       },
     ],
     stack: [
@@ -39,24 +40,25 @@ const roles = [
   },
   {
     company: "Cognizant Technology Solutions",
-    role: "Software Engineer, ML",
+    role: "Software Engineer",
+    tone: "sage" as const,
     location: "Mumbai, India",
     period: "Aug 2022 – Jun 2024",
     achievements: [
       {
         headline: "76% recall on fraudulent claims",
         detail:
-          "Owned the full ML lifecycle for insurance clients, building fraud-detection and claims risk-scoring models on XGBoost and LightGBM with real money riding on the decisions.",
+          "Owned machine learning models that flag risky insurance claims, with real money riding on the call.",
       },
       {
         headline: "Analyst review time cut roughly in half",
         detail:
-          "Fine-tuned BERT classifiers with Hugging Face to automatically triage claim notes before a human ever saw them.",
+          "Trained a language model to pre-screen claim notes before a human ever reads them.",
       },
       {
         headline: "Sub-300ms inference, end to end",
         detail:
-          "PySpark ETL on AWS fed the training data; FastAPI services on SageMaker and Kubernetes served it back, with MLflow tracking every experiment and model.",
+          "Built the pipeline and the services behind it, fast enough to use live, not just in a notebook.",
       },
     ],
     stack: [
@@ -83,7 +85,7 @@ export function Experience() {
     >
       <Aurora className="anim-aurora -left-[22%] top-[35%] h-[70vmin] w-[70vmin] opacity-50" />
 
-      <div className="relative mx-auto w-full max-w-6xl px-5 py-24 sm:px-8 sm:py-32">
+      <div className="relative mx-auto w-full max-w-6xl px-5 py-20 sm:px-8 sm:py-28">
         <Reveal>
           <SectionHeading
             index="02"
@@ -96,10 +98,16 @@ export function Experience() {
         <div className="mt-16 space-y-16">
           {roles.map((r, i) => (
             <Reveal key={r.company} delay={0.08 * i}>
-              <article className="border-t border-line pt-10">
+              <article className="relative border-t-2 pt-10" style={{ borderColor: `var(--${r.tone})` }}>
+                <span
+                  className="absolute -top-[5px] left-0 h-2.5 w-2.5 rounded-full"
+                  style={{ background: `var(--${r.tone})` }}
+                  aria-hidden="true"
+                />
                 <div className="flex flex-wrap items-baseline justify-between gap-x-8 gap-y-2">
                   <h3 className="font-display text-2xl font-semibold tracking-tight text-fg sm:text-3xl">
-                    {r.role} <span className="text-accent">·</span>{" "}
+                    {r.role}{" "}
+                    <span style={{ color: `var(--${r.tone})` }}>·</span>{" "}
                     <span className="italic">{r.company}</span>
                   </h3>
                   <p className="text-sm text-muted">
@@ -111,7 +119,8 @@ export function Experience() {
                   {r.achievements.map((a) => (
                     <li key={a.headline}>
                       <span
-                        className="mb-4 block h-px w-10 bg-gold"
+                        className="mb-4 block h-px w-10"
+                        style={{ background: `var(--${r.tone})` }}
                         aria-hidden="true"
                       />
                       <p className="text-[17px] font-semibold leading-snug text-fg">
@@ -126,7 +135,9 @@ export function Experience() {
 
                 <div className="mt-9 flex flex-wrap gap-2">
                   {r.stack.map((s) => (
-                    <Chip key={s}>{s}</Chip>
+                    <Chip key={s} tone={r.tone}>
+                      {s}
+                    </Chip>
                   ))}
                 </div>
               </article>

@@ -3,6 +3,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { Logo } from "@/components/Logo";
+import { ScrollProgress } from "@/components/ui/ScrollProgress";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import { navLinks } from "@/lib/site";
 
@@ -19,12 +20,13 @@ export function Navbar() {
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 transition-[background-color,box-shadow,backdrop-filter] duration-300 ${
+      className={`fixed inset-x-0 top-0 z-50 border-b border-transparent backdrop-blur-xl backdrop-saturate-150 transition-[background-color,box-shadow,backdrop-filter,border-color] duration-300 ${
         scrolled || open
-          ? "bg-bg/75 shadow-[0_12px_32px_-16px_rgba(0,0,0,0.5)] backdrop-blur-xl"
-          : ""
+          ? "border-line bg-surface/65 shadow-[0_12px_32px_-16px_rgba(0,0,0,0.25)]"
+          : "bg-transparent"
       }`}
     >
+      <ScrollProgress />
       <a
         href="#main"
         className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-accent focus:px-4 focus:py-2 focus:font-mono focus:text-sm focus:text-bg"
@@ -46,23 +48,19 @@ export function Navbar() {
           </span>
         </a>
 
-        <div className="hidden items-center gap-1.5 md:flex">
-          {navLinks.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className="group relative rounded-lg px-4 py-2 text-[15px] font-medium tracking-tight text-muted transition-colors duration-200 hover:bg-fg/[0.05] hover:text-fg"
-            >
-              {link.label}
-              <span
-                className="absolute inset-x-4 -bottom-px h-px scale-x-0 bg-gradient-to-r from-transparent via-accent to-transparent transition-transform duration-300 group-hover:scale-x-100"
-                aria-hidden="true"
-              />
-            </a>
-          ))}
-          <div className="ml-3">
-            <ThemeToggle />
+        <div className="hidden items-center gap-3 md:flex">
+          <div className="glass flex items-center gap-1 rounded-full p-1.5">
+            {navLinks.map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                className="relative rounded-full px-4 py-2 text-[14px] font-medium tracking-tight text-muted transition-colors duration-200 hover:bg-accent-soft hover:text-accent"
+              >
+                {link.label}
+              </a>
+            ))}
           </div>
+          <ThemeToggle />
         </div>
 
         <div className="flex items-center gap-2 md:hidden">
@@ -72,7 +70,7 @@ export function Navbar() {
             aria-label={open ? "Close menu" : "Open menu"}
             aria-expanded={open}
             onClick={() => setOpen((v) => !v)}
-            className="inline-flex h-9 w-9 items-center justify-center rounded-lg text-muted transition-colors hover:bg-fg/[0.05] hover:text-accent"
+            className="glass inline-flex h-9 w-9 items-center justify-center rounded-full text-muted transition-colors hover:text-accent"
           >
             <svg
               viewBox="0 0 24 24"

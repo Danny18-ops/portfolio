@@ -1,46 +1,57 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
+import { CloudShape } from "@/components/ui/CloudShape";
+import { Magnetic } from "@/components/ui/Magnetic";
 import { RotatingText } from "@/components/ui/RotatingText";
 
 const TITLES = ["AI Engineer", "ML Engineer", "AI Software Engineer"];
 
 const ease = [0.21, 0.47, 0.32, 0.98] as const;
 
+const CLOUDS = [
+  { top: "4%", left: "0%", w: "50vmin", h: "26vmin", tone: "var(--sky)", anim: "anim-cloud-1", delay: "0s" },
+  { top: "11%", left: "52%", w: "42vmin", h: "22vmin", tone: "var(--sky)", anim: "anim-cloud-2", delay: "-6s" },
+  { top: "44%", left: "70%", w: "44vmin", h: "23vmin", tone: "var(--accent)", anim: "anim-cloud-3", delay: "-3s" },
+  { top: "60%", left: "2%", w: "36vmin", h: "19vmin", tone: "var(--gold)", anim: "anim-cloud-1", delay: "-10s" },
+] as const;
+
+const STARS = [
+  { top: "8%", left: "18%", delay: "0s" },
+  { top: "5%", left: "42%", delay: "0.6s" },
+  { top: "12%", left: "67%", delay: "1.3s" },
+  { top: "20%", left: "29%", delay: "2s" },
+  { top: "6%", left: "85%", delay: "0.9s" },
+  { top: "17%", left: "8%", delay: "1.7s" },
+] as const;
+
 /**
- * Signature backdrop: two drifting ember-glow auroras, a film-grain
- * wash, and slow hairline orbits — original, no particle-network cliché.
+ * Signature backdrop: a personal dawn sky, not a generic glow. A
+ * purple-into-pink wash, four drifting cloud blooms at different
+ * depths and speeds, a quiet scatter of stars where the sky is still
+ * dark, and a film-grain wash to keep it from feeling flat/digital.
  */
 function Backdrop() {
   return (
     <div className="absolute inset-0 overflow-hidden" aria-hidden="true">
-      {/* ember auroras */}
-      <div className="anim-aurora absolute -top-[30%] left-[8%] h-[75vmin] w-[75vmin] rounded-full bg-[radial-gradient(closest-side,var(--glow),transparent_72%)] opacity-70 blur-3xl" />
-      <div className="anim-aurora-alt absolute -bottom-[25%] right-[-12%] h-[80vmin] w-[80vmin] rounded-full bg-[radial-gradient(closest-side,var(--gold-soft),transparent_70%)] blur-3xl" />
+      <div className="sky-wash absolute inset-0" />
 
-      {/* hairline orbits, anchored off the right edge */}
-      <svg
-        viewBox="0 0 800 800"
-        className="absolute -right-[22vmin] top-1/2 h-[110vmin] w-[110vmin] -translate-y-1/2"
-        fill="none"
-      >
-        <g className="anim-orbit">
-          <circle cx="400" cy="400" r="330" stroke="var(--line)" strokeWidth="1" />
-          <circle cx="400" cy="70" r="4" fill="var(--gold)" />
-        </g>
-        <g className="anim-orbit-reverse">
-          <circle
-            cx="400"
-            cy="400"
-            r="238"
-            stroke="var(--line)"
-            strokeWidth="1"
-            strokeDasharray="1 7"
-          />
-          <circle cx="638" cy="400" r="3" fill="var(--accent)" />
-        </g>
-        <circle cx="400" cy="400" r="146" stroke="var(--line)" strokeWidth="1" />
-      </svg>
+      {STARS.map((s, i) => (
+        <span
+          key={i}
+          className="anim-twinkle absolute h-[3px] w-[3px] rounded-full bg-fg"
+          style={{ top: s.top, left: s.left, animationDelay: s.delay }}
+        />
+      ))}
+
+      {CLOUDS.map((c, i) => (
+        <CloudShape
+          key={i}
+          tone={c.tone}
+          className={c.anim}
+          style={{ top: c.top, left: c.left, height: c.h, width: c.w, animationDelay: c.delay }}
+        />
+      ))}
 
       {/* film grain + fade into the page */}
       <div className="texture-grain absolute inset-0 opacity-[0.05] dark:opacity-[0.07]" />
@@ -84,7 +95,7 @@ export function Hero() {
         </motion.h1>
 
         <motion.p {...fadeUp(0.3)} className="mt-6 text-3xl text-muted sm:text-4xl">
-          <RotatingText items={TITLES} className="font-display italic text-fg" />
+          <RotatingText items={TITLES} className="text-gradient font-display italic" />
         </motion.p>
 
         <motion.p
@@ -100,18 +111,22 @@ export function Hero() {
           {...fadeUp(0.55)}
           className="mt-11 flex flex-wrap items-center gap-4"
         >
-          <a
-            href="#projects"
-            className="rounded-full bg-accent px-8 py-3.5 text-[15px] font-semibold text-bg shadow-[0_0_32px_var(--glow)] transition-[transform,filter] hover:-translate-y-0.5 hover:brightness-110"
-          >
-            View my work
-          </a>
-          <a
-            href="#contact"
-            className="rounded-full border border-fg/20 px-8 py-3.5 text-[15px] font-semibold text-fg transition-colors hover:border-gold/60 hover:text-gold"
-          >
-            Get in touch
-          </a>
+          <Magnetic>
+            <a
+              href="#projects"
+              className="block rounded-full bg-gradient-to-r from-accent to-gold px-8 py-3.5 text-[15px] font-semibold text-bg shadow-[0_8px_32px_-8px_var(--glow)] transition-[filter] hover:brightness-110"
+            >
+              View my work
+            </a>
+          </Magnetic>
+          <Magnetic>
+            <a
+              href="#contact"
+              className="glass block rounded-full px-8 py-3.5 text-[15px] font-semibold text-fg transition-colors hover:text-gold"
+            >
+              Get in touch
+            </a>
+          </Magnetic>
         </motion.div>
       </div>
 

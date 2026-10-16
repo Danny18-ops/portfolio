@@ -10,7 +10,7 @@ export function ThemeToggle() {
       type="button"
       aria-label="Toggle light/dark theme"
       onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
-      className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-line text-muted transition-colors hover:border-accent/50 hover:text-accent"
+      className="glass inline-flex h-9 w-9 items-center justify-center rounded-full text-muted transition-colors hover:text-accent"
     >
       {/* Render both icons, hide one with CSS so SSR markup is stable */}
       <svg

@@ -4,11 +4,11 @@ export const alt = "Dnyaneshwari Raut · AI Engineer · ML Engineer · AI Softwa
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-const ink = "#0d0c0a";
-const fg = "#f5f2ec";
-const muted = "#a9a297";
-const accent = "#e8b04b";
-const gold = "#e8b04b";
+const ink = "#0f0f14";
+const fg = "#f5f5f9";
+const muted = "#9a9bb0";
+const accent = "#8a7fff";
+const gold = "#8a7fff";
 
 function Node({ x, y, r, glow }: { x: number; y: number; r: number; glow?: boolean }) {
   return (
@@ -20,8 +20,8 @@ function Node({ x, y, r, glow }: { x: number; y: number; r: number; glow?: boole
         width: r * 2,
         height: r * 2,
         borderRadius: 9999,
-        background: glow ? gold : "rgba(245, 242, 236, 0.35)",
-        boxShadow: glow ? `0 0 24px 6px rgba(232, 176, 75, 0.45)` : "none",
+        background: glow ? gold : "rgba(245, 245, 249, 0.35)",
+        boxShadow: glow ? `0 0 24px 6px rgba(138, 127, 255, 0.45)` : "none",
         display: "flex",
       }}
     />
@@ -52,7 +52,7 @@ export default function OpenGraphImage() {
             width: 560,
             height: 560,
             borderRadius: 9999,
-            background: "rgba(232, 176, 75, 0.10)",
+            background: "rgba(138, 127, 255, 0.10)",
             filter: "blur(80px)",
             display: "flex",
           }}

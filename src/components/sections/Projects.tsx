@@ -3,6 +3,7 @@ import {
   FineTuneArt,
   GenContractArt,
   HackMatchArt,
+  HookRelayArt,
   PatientVoiceArt,
   ResearchCrewArt,
 } from "@/components/illustrations/ProjectArt";
@@ -10,18 +11,19 @@ import { Aurora } from "@/components/ui/Aurora";
 import { Chip } from "@/components/ui/Chip";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { TiltCard } from "@/components/ui/TiltCard";
 
 type Project = {
   title: string;
   art: ReactNode;
   hook: string;
-  prose: string;
+  prose?: string;
   stack: string[];
   live?: string;
   repo?: string;
 };
 
-const featured: Project = {
+const hackmatch: Project = {
   title: "HackMatch",
   art: <HackMatchArt />,
   hook: "Hackathon discovery, treated as a retrieval problem.",
@@ -32,44 +34,45 @@ const featured: Project = {
   repo: "https://github.com/Danny18-ops/hackmatch-app",
 };
 
-const projects: Project[] = [
-  {
-    title: "Multi-Agent AI Research System",
-    art: <ResearchCrewArt />,
-    hook: "Topic in, polished report out. No human in between.",
-    prose:
-      "Four specialized agents hand work down a pipeline, and a QA agent scores every draft 0–100, routing weak ones back for up to three self-correcting revisions. Runs on LangGraph or CrewAI behind one interface, with SQLite checkpoints so long runs can crash and resume.",
-    stack: ["LangGraph", "CrewAI", "OpenAI", "Python", "SQLite"],
-    repo: "https://github.com/Danny18-ops/multi-agent-research-system",
-  },
-  {
-    title: "AI Patient Voice",
-    art: <PatientVoiceArt />,
-    hook: "A voice bot that quality-tests other voice bots.",
-    prose:
-      "Places real outbound Twilio calls to a healthcare call-center's AI agent, playing one of 18 patient personas over OpenAI's Realtime speech-to-speech API. Every call is recorded, transcribed, and analyzed by a post-call LLM pass that surfaces bugs automatically.",
-    stack: ["OpenAI Realtime API", "Twilio", "FastAPI", "WebSockets"],
-    repo: "https://github.com/Danny18-ops/AI-Challenge",
-  },
-  {
-    title: "Gen Contract",
-    art: <GenContractArt />,
-    hook: "Plain-English deal terms in, editable clause-by-clause contracts out.",
-    prose:
-      "Drafts agreements section by section, covering liability, payment terms, and termination, instead of dumping one wall of legalese. React and TypeScript on Vite with shadcn/ui and a Supabase backend. Deployed and live.",
-    stack: ["React", "TypeScript", "Vite", "Supabase", "shadcn/ui"],
-    live: "https://gen-contract-18.lovable.app/",
-    repo: "https://github.com/Danny18-ops/contract-genesis-ai",
-  },
-  {
-    title: "LLM Fine-Tuning with RL",
-    art: <FineTuneArt />,
-    hook: "+20% arithmetic reasoning from pure reinforcement learning.",
-    prose:
-      "Fine-tuned Llama-1B with GRPO in PyTorch using rule-based rewards. No learned reward model, just verifiable checks on the model's arithmetic. A compact study in policy optimization, reward shaping, and where the two disagree.",
-    stack: ["PyTorch", "GRPO", "Llama-1B", "RL"],
-  },
-];
+const hookrelay: Project = {
+  title: "HookRelay",
+  art: <HookRelayArt />,
+  hook: "A Hookdeck/Zapier-style relay for every webhook you receive, with retries, replay, and an SSRF guard baked in.",
+  stack: ["Node.js", "MongoDB", "Redis", "BullMQ", "React", "SSE"],
+  repo: "https://github.com/Danny18-ops/HookRelay",
+};
+
+const researchCrew: Project = {
+  title: "Multi-Agent Research System",
+  art: <ResearchCrewArt />,
+  hook: "Topic in, polished report out. No human in between.",
+  stack: ["LangGraph", "CrewAI", "Python"],
+  repo: "https://github.com/Danny18-ops/multi-agent-research-system",
+};
+
+const patientVoice: Project = {
+  title: "AI Patient Voice",
+  art: <PatientVoiceArt />,
+  hook: "A voice bot that quality-tests other voice bots.",
+  stack: ["OpenAI Realtime", "Twilio", "FastAPI"],
+  repo: "https://github.com/Danny18-ops/AI-Challenge",
+};
+
+const genContract: Project = {
+  title: "Gen Contract",
+  art: <GenContractArt />,
+  hook: "Plain-English deal terms in, editable clause-by-clause contracts out.",
+  stack: ["React", "TypeScript", "Supabase", "shadcn/ui"],
+  live: "https://gen-contract-18.lovable.app/",
+  repo: "https://github.com/Danny18-ops/contract-genesis-ai",
+};
+
+const fineTune: Project = {
+  title: "LLM Fine-Tuning with RL",
+  art: <FineTuneArt />,
+  hook: "+20% arithmetic reasoning from pure reinforcement learning, no learned reward model.",
+  stack: ["PyTorch", "GRPO", "Llama-1B"],
+};
 
 function ActionButton({
   href,
@@ -90,8 +93,8 @@ function ActionButton({
       aria-label={`${label}: ${title} (opens in new tab)`}
       className={`inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold transition-[transform,filter,color,border-color] hover:-translate-y-0.5 ${
         primary
-          ? "bg-accent text-bg shadow-[0_0_20px_var(--glow)] hover:brightness-110"
-          : "border border-fg/20 text-fg hover:border-gold/60 hover:text-gold"
+          ? "bg-gradient-to-r from-accent to-gold text-bg shadow-[0_8px_28px_-10px_var(--glow)] hover:brightness-110"
+          : "glass text-fg hover:border-gold/60 hover:text-gold"
       }`}
     >
       {label}
@@ -111,12 +114,143 @@ function ActionButton({
   );
 }
 
+/** The art panel itself is the GitHub link — hover reveals the cue, click opens the repo. */
+function ProjectMedia({
+  art,
+  repo,
+  title,
+  className,
+}: {
+  art: ReactNode;
+  repo?: string;
+  title: string;
+  className: string;
+}) {
+  const body = (
+    <TiltCard className={className}>
+      {art}
+      {repo && (
+        <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-bg/0 opacity-0 backdrop-blur-0 transition-all duration-300 group-hover:bg-bg/55 group-hover:opacity-100 group-hover:backdrop-blur-[2px]">
+          <span className="translate-y-2 rounded-full border border-accent/50 bg-surface px-4 py-2 text-[13px] font-semibold text-accent opacity-0 shadow-lg transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+            View on GitHub ↗
+          </span>
+        </div>
+      )}
+    </TiltCard>
+  );
+
+  if (!repo) return body;
+
+  return (
+    <a
+      href={repo}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={`View ${title} source on GitHub (opens in new tab)`}
+      data-cursor="view"
+      data-cursor-label="View"
+      className="group relative block"
+    >
+      {body}
+    </a>
+  );
+}
+
+const card =
+  "glass flex h-full flex-col overflow-hidden rounded-3xl transition-shadow duration-300 hover:shadow-[0_24px_70px_-40px_var(--glow)] hover:ring-1 hover:ring-accent/40";
+
+/** The showcase tile — full story: prose, every tag, both buttons. */
+function LgCard({ project, kicker }: { project: Project; kicker?: string }) {
+  return (
+    <article className={`${card} grid md:grid-cols-2`}>
+      <ProjectMedia
+        art={project.art}
+        repo={project.repo}
+        title={project.title}
+        className="relative aspect-[400/260] border-b border-line md:aspect-auto md:h-full md:border-b-0 md:border-r"
+      />
+      <div className="flex flex-col justify-center p-8 sm:p-10">
+        {kicker && <p className="font-display text-[15px] italic text-gold">{kicker}</p>}
+        <h3 className="mt-1 font-display text-3xl font-semibold tracking-tight text-fg sm:text-4xl">
+          {project.title}
+        </h3>
+        <p className="mt-3 text-lg font-medium leading-snug text-fg/90">{project.hook}</p>
+        {project.prose && (
+          <p className="mt-3 text-[15px] leading-relaxed text-muted">{project.prose}</p>
+        )}
+        <div className="mt-5 flex flex-wrap gap-2">
+          {project.stack.map((s) => (
+            <Chip key={s}>{s}</Chip>
+          ))}
+        </div>
+        <div className="mt-7 flex flex-wrap items-center gap-3">
+          {project.live && (
+            <ActionButton href={project.live} label="Live" title={project.title} primary />
+          )}
+          {project.repo && <ActionButton href={project.repo} label="Code" title={project.title} />}
+        </div>
+      </div>
+    </article>
+  );
+}
+
+/** A compact horizontal tile — hook + tags + buttons, no long-form prose. */
+function WideCard({ project }: { project: Project }) {
+  return (
+    <article className={`${card} grid sm:grid-cols-[1.1fr_1fr]`}>
+      <ProjectMedia
+        art={project.art}
+        repo={project.repo}
+        title={project.title}
+        className="relative aspect-[400/230] border-b border-line sm:aspect-auto sm:h-full sm:border-b-0 sm:border-r"
+      />
+      <div className="flex flex-col justify-center p-6 sm:p-7">
+        <h3 className="font-display text-xl font-semibold tracking-tight text-fg">
+          {project.title}
+        </h3>
+        <p className="mt-2 text-[14.5px] leading-snug text-fg/90">{project.hook}</p>
+        <div className="mt-4 flex flex-wrap gap-1.5">
+          {project.stack.map((s) => (
+            <Chip key={s}>{s}</Chip>
+          ))}
+        </div>
+        <div className="mt-5 flex flex-wrap items-center gap-2.5">
+          {project.live && (
+            <ActionButton href={project.live} label="Live" title={project.title} primary />
+          )}
+          {project.repo && <ActionButton href={project.repo} label="Code" title={project.title} />}
+        </div>
+      </div>
+    </article>
+  );
+}
+
+/** The quiet tile — just the live visual, title, and hook; click to go deeper. */
+function SmCard({ project }: { project: Project }) {
+  return (
+    <article className={card}>
+      <ProjectMedia
+        art={project.art}
+        repo={project.repo}
+        title={project.title}
+        className="relative aspect-[400/260] border-b border-line"
+      />
+      <div className="flex flex-1 flex-col p-5">
+        <h3 className="font-display text-base font-semibold tracking-tight text-fg">
+          {project.title}
+        </h3>
+        <p className="mt-1.5 text-[13px] leading-snug text-muted">{project.hook}</p>
+      </div>
+    </article>
+  );
+}
+
 export function Projects() {
   return (
     <section
       id="projects"
       aria-labelledby="projects-heading"
-      className="relative mx-auto w-full max-w-6xl px-5 py-24 sm:px-8 sm:py-32"
+      className="relative mx-auto w-full max-w-6xl px-5 py-20 sm:px-8 sm:py-28"
     >
       <Aurora tone="gold" className="anim-aurora-alt -right-[15%] bottom-[5%] h-[75vmin] w-[75vmin] opacity-60" />
 
@@ -129,70 +263,26 @@ export function Projects() {
         />
       </Reveal>
 
-      {/* featured project */}
+      {/* bento: big showcase + a stacked column, then two wide tiles below */}
       <Reveal>
-        <article className="mt-14 grid overflow-hidden rounded-3xl border border-gold/30 bg-surface transition-colors duration-300 hover:border-gold/60 md:grid-cols-2">
-          <div className="aspect-[400/260] border-b border-line md:aspect-auto md:border-b-0 md:border-r">
-            {featured.art}
-          </div>
-          <div className="flex flex-col justify-center p-8 sm:p-11">
-            <p className="font-display text-[15px] italic text-gold">Featured</p>
-            <h3 className="mt-3 font-display text-3xl font-semibold tracking-tight text-fg sm:text-4xl">
-              {featured.title}
-            </h3>
-            <p className="mt-3 text-lg font-medium leading-snug text-fg/90">
-              {featured.hook}
-            </p>
-            <p className="mt-3 text-[15px] leading-relaxed text-muted">
-              {featured.prose}
-            </p>
-            <div className="mt-5 flex flex-wrap gap-2">
-              {featured.stack.map((s) => (
-                <Chip key={s}>{s}</Chip>
-              ))}
-            </div>
-            <div className="mt-8 flex flex-wrap items-center gap-3">
-              {featured.live && (
-                <ActionButton href={featured.live} label="Live" title={featured.title} primary />
-              )}
-              {featured.repo && (
-                <ActionButton href={featured.repo} label="Code" title={featured.title} />
-              )}
+        <div className="mt-14 grid gap-6 md:grid-cols-[1.6fr_1fr]">
+          <LgCard project={hackmatch} kicker="Featured" />
+          <div className="grid gap-6 md:grid-rows-[auto_1fr]">
+            <WideCard project={hookrelay} />
+            <div className="grid grid-cols-2 gap-4 sm:gap-6">
+              <SmCard project={researchCrew} />
+              <SmCard project={patientVoice} />
             </div>
           </div>
-        </article>
+        </div>
       </Reveal>
 
-      {/* project grid */}
-      <div className="mt-10 grid gap-8 md:grid-cols-2">
-        {projects.map((p, i) => (
-          <Reveal key={p.title} delay={0.06 * (i % 2)}>
-            <article className="flex h-full flex-col overflow-hidden rounded-3xl border border-line bg-surface transition-[border-color,box-shadow] duration-300 hover:border-accent/40 hover:shadow-[0_24px_70px_-40px_var(--glow)]">
-              <div className="aspect-[400/230] border-b border-line">{p.art}</div>
-              <div className="flex flex-1 flex-col p-7 sm:p-8">
-                <h3 className="font-display text-2xl font-semibold tracking-tight text-fg">
-                  {p.title}
-                </h3>
-                <p className="mt-2.5 text-[17px] font-medium leading-snug text-fg/90">
-                  {p.hook}
-                </p>
-                <p className="mt-3 text-[15px] leading-relaxed text-muted">{p.prose}</p>
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {p.stack.map((s) => (
-                    <Chip key={s}>{s}</Chip>
-                  ))}
-                </div>
-                <div className="mt-auto flex flex-wrap items-center gap-3 pt-7">
-                  {p.live && (
-                    <ActionButton href={p.live} label="Live" title={p.title} primary />
-                  )}
-                  {p.repo && <ActionButton href={p.repo} label="Code" title={p.title} />}
-                </div>
-              </div>
-            </article>
-          </Reveal>
-        ))}
-      </div>
+      <Reveal delay={0.08}>
+        <div className="mt-6 grid gap-6 sm:grid-cols-2">
+          <WideCard project={genContract} />
+          <WideCard project={fineTune} />
+        </div>
+      </Reveal>
     </section>
   );
 }

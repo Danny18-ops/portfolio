@@ -19,7 +19,7 @@ export function About() {
         className="anim-aurora-alt -right-[18%] -top-[25%] h-[65vmin] w-[65vmin] opacity-60"
       />
 
-      <div className="relative mx-auto w-full max-w-6xl px-5 py-24 sm:px-8 sm:py-32">
+      <div className="relative mx-auto w-full max-w-6xl px-5 py-20 sm:px-8 sm:py-28">
         <Reveal>
           <SectionHeading
             index="01"
